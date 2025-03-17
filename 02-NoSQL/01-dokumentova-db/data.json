@@ -1,0 +1,61 @@
+{
+    "docs": [
+        {
+            "_id": "john_doe",
+            "name": "John Doe",
+            "age": 30,
+            "email": "[e-mailová adresa byla odstraněna]",
+            "address": {
+                "street": "123 Main St",
+                "city": "Anytown"
+            },
+            "hobbies": [
+                "reading",
+                "hiking",
+                "coding"
+            ]
+        },
+        {
+            "_id": "jane_doe",
+            "name": "Jane Doe",
+            "age": 25,
+            "email": "[e-mailová adresa byla odstraněna]",
+            "address": {
+                "street": "456 Oak Ave",
+                "city": "Anytown"
+            },
+            "hobbies": [
+                "swimming",
+                "painting"
+            ]
+        },
+        {
+            "_id": "peter_pan",
+            "name": "Peter Pan",
+            "age": 10,
+            "email": "[e-mailová adresa byla odstraněna]",
+            "address": {
+                "street": "789 Neverland Dr",
+                "city": "Neverland"
+            }
+        },
+        {
+            "_id": "post1",
+            "title": "My First Post",
+            "content": "This is the content of my first post.",
+            "author": "john_doe"
+        },
+        {
+            "_id": "post2",
+            "title": "Another Post",
+            "content": "This is another post.",
+            "author": "jane_doe"
+        },
+        {
+            "_id": "post3",
+            "title": "Coding Adventures",
+            "content": "Today I learned about NoSQL databases!",
+            "author": "john_doe"
+        }
+    ]
+}

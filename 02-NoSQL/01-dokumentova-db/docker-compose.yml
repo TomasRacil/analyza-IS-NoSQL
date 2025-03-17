@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  couchdb:
+    image: couchdb:latest  # Použijeme oficiální CouchDB image
+    ports:
+      - "5984:5984"  # Výchozí port pro CouchDB
+    volumes:
+      - couchdb_data:/opt/couchdb/data # Persistentní uložení dat
+    environment:
+      - COUCHDB_USER=admin  # Nastavíme uživatelské jméno (volitelné)
+      - COUCHDB_PASSWORD=password # Nastavíme heslo (volitelné, ale DŮLEŽITÉ pro bezpečnost)
+      # - NODENAME=couchdb # Volitelné, pro clustering
+
+volumes:
+  couchdb_data:

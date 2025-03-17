@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ukazka MongoDB a Nginx</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        #data {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .item {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 5px;
+        }
+
+        button {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Data z MongoDB</h1>
+
+    <input type="text" id="newItemInput" placeholder="Novy zaznam">
+    <button id="addButton">Pridat</button>
+
+    <div id="data"></div>
+
+    <script>
+        const apiUrl = 'http://localhost:3000/items'; // URL našeho API
+
+        function loadData() {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(items => {
+                    const dataDiv = document.getElementById('data');
+                    dataDiv.innerHTML = '';
+                    items.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.classList.add('item');
+                        itemDiv.textContent = item.text;
+                        dataDiv.appendChild(itemDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error("Chyba pri nacitani dat:", error);
+                    document.getElementById('data').textContent = "Chyba pri nacitani dat.";
+                });
+        }
+
+        function addItem() {
+            const newItemInput = document.getElementById('newItemInput');
+            const newItemText = newItemInput.value.trim();
+
+            if (newItemText === "") {
+                alert("Zadejte text noveho zaznamu.");
+                return;
+            }
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: newItemText })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(() => {
+                    newItemInput.value = '';
+                    loadData();
+                })
+                .catch(error => {
+                    console.error("Chyba pri pridavani:", error);
+                });
+        }
+        document.getElementById('addButton').addEventListener('click', addItem);
+        loadData()
+    </script>
+</body>
+
+</html>

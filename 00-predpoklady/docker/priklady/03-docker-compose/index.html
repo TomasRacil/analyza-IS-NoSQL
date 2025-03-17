@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ukázka Docker Compose</title>
+</head>
+
+<body>
+    <h1>Data:</h1>
+    <pre id="data"></pre>
+    <script>
+        fetch('data.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json(); // Parse as JSON
+            })
+            .then(data => {
+                // Access the data correctly based on your JSON structure
+                document.getElementById('data').textContent = data.message; // For the first example
+                // OR
+                // document.getElementById('data').textContent = JSON.stringify(data, null, 2); // For a generic JSON object/array
+            })
+            .catch(error => {
+                document.getElementById('data').textContent = `Chyba při načítání dat: ${error.message}`;
+            });
+    </script>
+</body>
+
+</html>
