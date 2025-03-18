@@ -1,0 +1,92 @@
+version: '3.9'
+
+services:
+  cassandra:
+    image: cassandra:4.0.17-jammy
+    container_name: cassandra
+    networks:
+      - stargate
+    mem_limit: 2G
+    environment:
+      - HEAP_NEWSIZE=128M
+      - MAX_HEAP_SIZE=1024M
+      - CASSANDRA_CLUSTER_NAME=cassandra
+    volumes:
+      - cassandra-data:/var/lib/cassandra
+  coordinator:
+    image: stargateio/coordinator-4_0:v2.1
+    depends_on:
+      - cassandra
+    networks:
+      - stargate
+    ports:
+      - "9042:9042"
+      - "8081:8081"
+      - "8084:8084"
+      - "8090:8090"
+    mem_limit: 2G
+    environment:
+      - JAVA_OPTS="-Xmx2G"
+      - CLUSTER_NAME=cassandra
+      - CLUSTER_VERSION=4.0
+      - SEED=cassandra
+      - RACK_NAME=rack1
+      - DATACENTER_NAME=datacenter1
+      - ENABLE_AUTH=true
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8084/checker/readiness" ]
+      interval: 5s
+      timeout: 3s
+      retries: 60
+      #4:30s start
+  restapi:
+    image: stargateio/restapi:v2.1
+    depends_on:
+      coordinator:
+        condition: service_healthy
+    networks:
+      - stargate
+    ports:
+      - "8082:8082"
+    mem_limit: 2G
+    environment:
+      - QUARKUS_GRPC_CLIENTS_BRIDGE_HOST=coordinator
+      - QUARKUS_GRPC_CLIENTS_BRIDGE_PORT=8091
+      - QUARKUS_HTTP_ACCESS_LOG_ENABLED=true
+      - QUARKUS_LOG_LEVEL=INFO
+  graphqlapi:
+    image: stargateio/graphqlapi:v2.1
+    depends_on:
+      coordinator:
+        condition: service_healthy
+    networks:
+      - stargate
+    ports:
+      - "8080:8080"
+    mem_limit: 2G
+    environment:
+      - QUARKUS_GRPC_CLIENTS_BRIDGE_HOST=coordinator
+      - QUARKUS_GRPC_CLIENTS_BRIDGE_PORT=8091
+      - QUARKUS_HTTP_ACCESS_LOG_ENABLED=true
+      - QUARKUS_LOG_LEVEL=INFO
+  docsapi:
+    image: stargateio/docsapi:v2.1
+    depends_on:
+      coordinator:
+        condition: service_healthy
+    networks:
+      - stargate
+    ports:
+      - "8180:8180"
+    mem_limit: 2G
+    environment:
+      - QUARKUS_GRPC_CLIENTS_BRIDGE_HOST=coordinator
+      - QUARKUS_GRPC_CLIENTS_BRIDGE_PORT=8091
+      - QUARKUS_HTTP_ACCESS_LOG_ENABLED=true
+      - QUARKUS_LOG_LEVEL=INFO
+networks:
+  stargate:
+
+
+volumes:
+  cassandra-data:

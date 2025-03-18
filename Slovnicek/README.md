@@ -10,7 +10,9 @@
 
 *   **Apache Spark:** Framework pro distribuované zpracování dat. Používá se pro Big Data aplikace.
 
-*  **Apache Solr:** Open-source platforma pro fulltextové vyhledávání.
+*   **Apache Solr:** Open-source platforma pro fulltextové vyhledávání.
+
+*   **AWS:** Amazon Web Services. Cloudová platforma od Amazonu, která nabízí širokou škálu služeb, včetně DynamoDB.
 
 *   **Backend:** Část webové aplikace, která běží na serveru. Zodpovídá za zpracování dat, komunikaci s databází a logiku aplikace.
 
@@ -22,7 +24,9 @@
 
 *   **CAD/CAM:** (Computer-Aided Design/Computer-Aided Manufacturing) – Počítačem podporované navrhování a výroba.  Software pro tvorbu technických výkresů, 3D modelů a řízení výrobních strojů.
 
-* **CMS:** (Content Management System) – Systém pro správu obsahu. Umožňuje vytvářet, upravovat a publikovat digitální obsah (texty, obrázky, videa) na webových stránkách.
+*   **CMS:** (Content Management System) – Systém pro správu obsahu. Umožňuje vytvářet, upravovat a publikovat digitální obsah (texty, obrázky, videa) na webových stránkách.
+
+*   **Cizí klíč:** (Foreign Key) - V relačních databázích sloupec (nebo skupina sloupců) v jedné tabulce, který odkazuje na primární klíč jiné tabulky. Vytváří vztah mezi tabulkami.
 
 *   **CORS:** (Cross-Origin Resource Sharing) – Mechanismus, který umožňuje webovým stránkám z jedné domény (origin) přistupovat k prostředkům na jiné doméně.
 
@@ -52,13 +56,25 @@
 
 *   **GIS:** (Geographic Information System) – Geografický informační systém.  Systém pro sběr, správu, analýzu a vizualizaci geografických dat.
 
-*   **HTML:** (HyperText Markup Language) – Značkovací jazyk pro tvorbu webových stránek. Definuje strukturu a obsah stránky.
+*   **Hadoop:** Open-source framework pro distribuované ukládání a zpracování velkých objemů dat. HBase je postavena nad Hadoopem a využívá HDFS (Hadoop Distributed File System).
+
+*   **Hash Table:** (Hašovací tabulka) - Datová struktura, která implementuje asociativní pole (klíč-hodnota). Používá hašovací funkci k výpočtu indexu, kam se má pár klíč-hodnota uložit. Umožňuje velmi rychlé vyhledávání, vkládání a mazání (v průměrném případě O(1)).
+
+*   **HDFS:** (Hadoop Distributed File System) - Distribuovaný souborový systém, který je součástí Hadoopu.
+
+*   **Horizontální škálovatelnost:** - Schopnost systému rozšiřovat svůj výkon přidáváním dalších uzlů (serverů) do existující infrastruktury.  Opakem je vertikální škálovatelnost (zvyšování výkonu jednoho serveru).
 
 *   **Host (Hostitelský počítač/Hostitelský OS):**  Fyzický nebo virtuální stroj, na kterém běží Docker Engine a kontejnery.
+
+*   **HTML:** (HyperText Markup Language) – Značkovací jazyk pro tvorbu webových stránek. Definuje strukturu a obsah stránky.
 
 *   **HTTP:** (Hypertext Transfer Protocol) – Protokol pro přenos hypertextových dokumentů (webových stránek). Používá se pro komunikaci mezi webovým prohlížečem a serverem.
 
 *   **IIFE:** (Immediately Invoked Function Expression) – Funkce v JavaScriptu, která je definována a okamžitě spuštěna. Používá se pro vytvoření lokálního scope (rozsahu platnosti proměnných) a pro zapouzdření kódu.
+
+*   **Index** - Datová struktura, která zrychluje vyhledávání v databázi. Vytváří se nad jedním nebo více sloupci tabulky a obsahuje seřazený seznam hodnot s ukazateli na odpovídající řádky.
+
+*   **In-memory databáze** - Databáze, která primárně ukládá data v operační paměti (RAM) počítače. To umožňuje extrémně rychlý přístup k datům, ale data jsou obvykle ztracena při výpadku napájení nebo restartu (pokud není použita perzistence).
 
 * **IoT:** (Internet of Things) – Internet věcí. Síť fyzických zařízení (např. senzory, spotřebiče, vozidla) propojených s internetem, která si mohou navzájem vyměňovat data.
 
@@ -66,7 +82,15 @@
 
 *   **JSON:** (JavaScript Object Notation) – Textový formát pro výměnu dat. Založený na podmnožině JavaScriptu. Snadno čitelný pro lidi i stroje. Používá se v mnoha webových aplikacích a NoSQL databázích (např. MongoDB).
 
+*   **Kardinalita:** (Cardinality) - V kontextu databází a množin, kardinalita označuje počet unikátních prvků v množině, nebo počet řádků v tabulce (případně počet distinct hodnot ve sloupci)
+
+*   **Konzistentní hashování:** (Consistent Hashing) -  Speciální typ hashovací techniky, který se používá v distribuovaných systémech (např. distribuované key-value stores).  Minimalizuje počet klíčů, které je třeba přemístit při přidání nebo odebrání uzlu v clusteru.
+
+*   **Latence:** (Latency) - Doba, která uplyne mezi požadavkem a odpovědí. V kontextu databází je to doba odezvy databáze na dotaz. Nízká latence je žádoucí.
+
 *   **LTS:** (Long-Term Support) – Verze softwaru, která má garantovanou dlouhodobou podporu (opravy chyb, bezpečnostní aktualizace).
+
+*   **Master-Slave replikace:** - Způsob replikace dat, kde existuje jeden primární uzel (master), který přijímá zápisy, a jeden nebo více sekundárních uzlů (slaves/repliky), které asynchronně replikují data z mastera. Slaves mohou obsluhovat čtecí operace, čímž se zvyšuje výkon a dostupnost.
 
 *   **MapReduce:** Programovací model pro zpracování velkých objemů dat na distribuovaném clusteru. Data se rozdělí na menší části, ty se zpracují paralelně (map) a výsledky se sloučí (reduce).
 
@@ -82,17 +106,35 @@
 
 *   **OLTP:** (Online Transaction Processing) – Zpracování transakcí v reálném čase. Typicky zahrnuje velké množství krátkých transakcí (např. v bankovnictví, e-commerce).
 
+*   **Paxos:** Distribuovaný konsenzus protokol. Používá se v LWT v Cassandře pro zajištění atomicity a konzistence podmíněných operací.
+
+*   **Perzistence:** (Persistence) - Schopnost databáze ukládat data trvale, i po restartu serveru nebo výpadku napájení. Obvykle se realizuje ukládáním dat na pevný disk (HDD nebo SSD).
+
+*   **Primární klíč:** (Primary Key) - V relačních databázích sloupec (nebo kombinace sloupců) v tabulce, který jednoznačně identifikuje každý řádek.  Musí být unikátní a nesmí obsahovat hodnotu NULL.
+
 *  **RAM:** (Random Access Memory) - Operační paměť počítače. Slouží k dočasnému ukládání dat a spuštěných programů.
 
 *   **RDBMS:** (Relational Database Management System) – Systém pro správu relačních databází. Např. MySQL, PostgreSQL, Oracle, SQL Server.
 
 *   **RDD:** (Resilient Distributed Dataset) – Základní datová struktura v Apache Sparku. Reprezentuje neměnnou, distribuovanou kolekci dat, kterou lze zpracovávat paralelně.
 
+*   **Redis Cluster:** Distribuované řešení Redisu, které umožňuje automatické rozdělení dat (sharding) na více instancí Redisu (uzlů). Poskytuje vysokou dostupnost a škálovatelnost pro čtení i zápis.
+
+*   **Replikace:** Proces kopírování dat z jedné databáze (master) na jednu nebo více dalších databází (slaves/repliky). Slouží ke zvýšení dostupnosti, odolnosti proti výpadkům a škálování čtecích operací.
+
+*   **Reverzní proxy:** (Reverse Proxy) - Typ proxy serveru, který stojí před jedním nebo více webovými servery. Přijímá požadavky od klientů a přeposílá je příslušnému backendovému serveru. Může také zajišťovat load balancing, cachování, SSL šifrování a další funkce.
+
 *   **REST (RESTful) API:** (Representational State Transfer) – Architektonický styl pro tvorbu webových služeb. REST API používá standardní HTTP metody (GET, POST, PUT, DELETE) pro komunikaci s daty. Data se obvykle přenášejí ve formátu JSON nebo XML.
 
-* **SDK:** (Software Development Kit) - sada nástrojů pro vývojáře. Obvykle obsahuje knihovny, dokumentaci, příklady kódu a další nástroje, které usnadňují vývoj aplikací pro určitou platformu nebo technologii.
+*   **Rollback:** Vrácení databázových změn provedených v rámci transakce zpět do stavu před začátkem transakce. Používá se v případě chyby nebo zrušení transakce.
 
-* **Sharding**: Technika horizontálního škálování databáze, při které se data rozdělí na menší části (shardy) a uloží na více serverech.
+*   **Runtime:** Doba, kdy je program spuštěn (běží). Opakem je compile time (doba kompilace). Runtime chyba je chyba, která nastane během běhu programu.
+
+*   **Scope:** (Rozsah platnosti) - Kontext, ve kterém je proměnná (nebo jiný identifikátor) viditelná a použitelná.
+
+*   **SDK:** (Software Development Kit) - sada nástrojů pro vývojáře. Obvykle obsahuje knihovny, dokumentaci, příklady kódu a další nástroje, které usnadňují vývoj aplikací pro určitou platformu nebo technologii.
+
+*   **Sharding**: Technika horizontálního škálování databáze, při které se data rozdělí na menší části (shardy) a uloží na více serverech.
 
 *   **Spark SQL:** Modul v Apache Sparku, který umožňuje dotazovat se na data pomocí SQL (nebo dialektu SQL).
 
@@ -100,13 +142,14 @@
 
 *   **TSDB:** (Time Series Database) – Databáze optimalizovaná pro ukládání a práci s časovými řadami dat (data, která se mění v čase).
 
-* **VCS:** (Version Control System) - systém správy verzí. Umožňuje sledovat změny v souborech, vracet se k předchozím verzím, spolupracovat s ostatními a řešit konflikty. Např. Git, Subversion, Mercurial.
+*   **VCS:** (Version Control System) - systém správy verzí. Umožňuje sledovat změny v souborech, vracet se k předchozím verzím, spolupracovat s ostatními a řešit konflikty. Např. Git, Subversion, Mercurial.
 
 *   **VS Code:** (Visual Studio Code) – Populární, bezplatný a open-source editor kódu od Microsoftu. Má vestavěnou podporu pro Git.
 
-* **URL:** (Uniform Resource Locator) Adresa zdroje na internetu (např. webové stránky, souboru).
+*   **Wide-column store:** Jiný název pro sloupcové databáze, který zdůrazňuje, že tabulky mohou mít potenciálně velmi velký počet sloupců.
 
-* **XML:** (Extensible Markup Language) – Značkovací jazyk pro reprezentaci strukturovaných dat.  Používá se pro výměnu dat mezi různými systémy.
+*   **URL:** (Uniform Resource Locator) Adresa zdroje na internetu (např. webové stránky, souboru).
+
+*   **XML:** (Extensible Markup Language) – Značkovací jazyk pro reprezentaci strukturovaných dat.  Používá se pro výměnu dat mezi různými systémy.
 
 *   **YAML:** (YAML Ain't Markup Language) – Formát pro serializaci dat.  Často se používá pro konfigurační soubory (např. v Docker Compose).  Je navržen tak, aby byl snadno čitelný pro lidi.
-Tento slovník by měl studentům pomoci lépe se orientovat v terminologii používané v kurzu. Doporučuji ho umístit do repozitáře, například do hlavního `README.md` nebo do samostatného souboru (např. `SLOVNIK.md`).
