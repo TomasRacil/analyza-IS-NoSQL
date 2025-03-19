@@ -38,25 +38,22 @@ app.get('/items', async (req, res) => {
     try {
         const items = await db.collection(collectionName).find({}).toArray();
         res.json(items);
-    } catch (error) {
-        console.error("Chyba při získávání položek", error)
-        res.status(500).send('Chyba serveru');
+    } catch (err) {
+        console.error('Error fetching items:', err);
+        res.status(500).send('Internal Server Error');
     }
 });
 
 // Endpoint pro přidání nové položky
 app.post('/items', async (req, res) => {
     try {
-        const newItem = req.body;
-        if (!newItem.text) { // Jednoduchá validace
-            return res.status(400).send('Text položky je povinný.');
-        }
-
+        const newItem = req.body; // Získání dat z těla requestu
+        // Zde by měla být validace dat!!!
         const result = await db.collection(collectionName).insertOne(newItem);
         res.status(201).json(result); // 201 Created
-    } catch (error) {
-        console.error("Chyba při přidávání", error)
-        res.status(500).send('Chyba serveru');
+    } catch (err) {
+        console.error('Error adding item:', err);
+        res.status(500).send('Internal Server Error');
     }
 });
 

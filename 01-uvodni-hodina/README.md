@@ -43,8 +43,8 @@ V předmětu budeme používat nástroje Git a Docke, předpokládá se že těm
 
 Vaše hodnocení v tomto předmětu bude založeno na následujících aktivitách:
 
-*   **Tři malé úkoly (3 x 10% = 30%):**  Tyto úkoly budou zaměřeny na procvičení konkrétních témat probíraných v jednotlivých blocích.  Budete je odevzdávat prostřednictvím GitHubu. Na zpracování úkolu budete mít vždy 14 dní. Neodevzdání úkolu v termínu vás automaticky připravuje o body.
-*   **Jeden velký projekt (70%):**  Na konci semestru budete odevzdávat a prezentovat větší projekt, který bude vyžadovat integraci znalostí z celého předmětu.  Projekt bude také odevzdáván prostřednictvím GitHubu. Zadání, které si navrhnete sami, od vás obdržím do 4 týdnů od zahájení předmětu (tzn. 17.4.2025). Projekt je třeba odevzdat nejpozději dva týdny po poslední hodině (tzn. 3.7.2025)
+*   **Dva menší úkoly (2 x 25% = 50%):**  Tyto úkoly budou zaměřeny na procvičení konkrétních témat probíraných v jednotlivých blocích. Termín a způsob odevzdání úkolu bude vždy definován při jeho zadání.
+*   **Jeden větší projekt (50%):**  Na konci semestru budete odevzdávat a prezentovat větší projekt, který bude vyžadovat integraci znalostí z celého předmětu.  Projekt bude také odevzdáván prostřednictvím GitHubu. Zadání, které si navrhnete sami, od vás obdržím do 4 týdnů od zahájení předmětu (tzn. 17.4.2025). Projekt je třeba odevzdat nejpozději dva týdny po poslední hodině (tzn. 3.7.2025)
 
 K splnění předmětu a udělení zápočtu musíte získat více jak 60% bodů.
 

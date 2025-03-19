@@ -2,13 +2,15 @@
 <html>
 
 <head>
-    <title>Ukazka MongoDB a Nginx</title>
+    <meta charset="UTF-8">
+    <title>Ukazka MongoDB a Nginx (Flexibilni)</title>
     <style>
         body {
             font-family: sans-serif;
         }
 
-        #data {
+        #data,
+        #newFields {
             border: 1px solid #ccc;
             padding: 10px;
             margin-top: 10px;
@@ -20,23 +22,51 @@
             border-bottom: 1px solid #eee;
         }
 
+        .item p {
+            margin: 2px 0;
+        }
+
+        .field-group {
+            margin-bottom: 5px;
+        }
+
         input[type="text"] {
-            width: 300px;
+            width: 150px;
             padding: 5px;
+            margin-right: 5px;
         }
 
         button {
             padding: 5px 10px;
         }
+
+        .delete-button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 3px 6px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-left: 5px;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Data z MongoDB</h1>
+    <h1>Data z MongoDB (Flexibilní)</h1>
 
-    <input type="text" id="newItemInput" placeholder="Novy zaznam">
-    <button id="addButton">Pridat</button>
+    <h2>Přidat nový záznam</h2>
+    <div id="newFields">
+        <div class="field-group">
+            <input type="text" class="fieldName" placeholder="Název pole">
+            <input type="text" class="fieldValue" placeholder="Hodnota pole">
+            <button type="button" class="addFieldButton">Přidat pole</button>
+        </div>
+    </div>
+    <button id="addButton">Přidat záznam</button>
 
+
+    <h2>Existující záznamy</h2>
     <div id="data"></div>
 
     <script>
@@ -56,7 +86,15 @@
                     items.forEach(item => {
                         const itemDiv = document.createElement('div');
                         itemDiv.classList.add('item');
-                        itemDiv.textContent = item.text;
+
+                        // Iterujeme přes *všechny* klíče v objektu item
+                        for (const key in item) {
+                            if (item.hasOwnProperty(key)) { // Důležité: Kontrola, zda klíč patří přímo objektu
+                                const p = document.createElement('p');
+                                p.textContent = `${key}: ${item[key]}`;
+                                itemDiv.appendChild(p);
+                            }
+                        }
                         dataDiv.appendChild(itemDiv);
                     });
                 })
@@ -67,20 +105,35 @@
         }
 
         function addItem() {
-            const newItemInput = document.getElementById('newItemInput');
-            const newItemText = newItemInput.value.trim();
+            const newFieldsDiv = document.getElementById('newFields');
+            const fieldGroups = newFieldsDiv.querySelectorAll('.field-group');
+            const newItem = {}; // Prázdný objekt, do kterého budeme sbírat data
 
-            if (newItemText === "") {
-                alert("Zadejte text noveho zaznamu.");
+            fieldGroups.forEach(group => {
+                const fieldNameInput = group.querySelector('.fieldName');
+                const fieldValueInput = group.querySelector('.fieldValue');
+                const fieldName = fieldNameInput.value.trim();
+                const fieldValue = fieldValueInput.value.trim();
+
+                // Přidáme do objektu, POUZE pokud název pole není prázdný
+                if (fieldName !== "") {
+                    newItem[fieldName] = fieldValue;
+                }
+            });
+
+            // Kontrola, zda byl přidán alespoň jeden klíč/hodnota
+            if (Object.keys(newItem).length === 0) {
+                alert("Zadejte alespoň jedno pole a hodnotu.");
                 return;
             }
+            //console.log("Odesílaný objekt:", newItem); // Pro ladění - zkontroluj, co se posílá
 
             fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ text: newItemText })
+                body: JSON.stringify(newItem) // Posíláme celý objekt
             })
                 .then(response => {
                     if (!response.ok) {
@@ -89,15 +142,56 @@
                     return response.json();
                 })
                 .then(() => {
-                    newItemInput.value = '';
+                    // Vyčistíme formulář PO úspěšném přidání
+                    const fieldGroups = document.querySelectorAll('#newFields .field-group');
+                    fieldGroups.forEach(group => group.remove());
+                    // Znovu přidáme prázdnou skupinu pro další zadávání.
+                    addField();
                     loadData();
                 })
                 .catch(error => {
                     console.error("Chyba pri pridavani:", error);
                 });
         }
+
+        // Funkce pro přidání nového páru polí do formuláře
+        function addField() {
+            const newFieldsDiv = document.getElementById('newFields');
+            const newFieldGroup = document.createElement('div');
+            newFieldGroup.classList.add('field-group');
+
+            const newFieldNameInput = document.createElement('input');
+            newFieldNameInput.type = 'text';
+            newFieldNameInput.classList.add('fieldName');
+            newFieldNameInput.placeholder = 'Název pole';
+
+            const newFieldValueInput = document.createElement('input');
+            newFieldValueInput.type = 'text';
+            newFieldValueInput.classList.add('fieldValue');
+            newFieldValueInput.placeholder = 'Hodnota pole';
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = "button";
+            deleteButton.textContent = "X";
+            deleteButton.classList.add('delete-button');
+            deleteButton.addEventListener('click', () => {
+                newFieldGroup.remove();
+            });
+
+            newFieldGroup.appendChild(newFieldNameInput);
+            newFieldGroup.appendChild(newFieldValueInput);
+            newFieldGroup.appendChild(deleteButton);
+
+            newFieldsDiv.appendChild(newFieldGroup);
+        }
+
+
+        // Event listenery
         document.getElementById('addButton').addEventListener('click', addItem);
-        loadData()
+        // Přidáme event listener na tlačítko pro PŘIDÁNÍ *DALŠÍHO* POLE ve formuláři.
+        document.querySelector('.addFieldButton').addEventListener('click', addField);
+        // Inicializace
+        loadData();
     </script>
 </body>
 

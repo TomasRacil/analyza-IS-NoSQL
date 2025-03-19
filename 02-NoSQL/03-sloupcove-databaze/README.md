@@ -1,6 +1,6 @@
 # Sloupcové (Column-Family) Databáze
 
-## 1. Sloupcové Databáze: Teorie
+## 1 Sloupcové Databáze: Teorie
 
 ### 1.1 Datový Model
 
@@ -91,7 +91,7 @@ Keyspace: mykeyspace
 *   **Aplikace s komplexními vztahy mezi daty, kde jsou časté JOINy.**
 *   **Aplikace s častými aktualizacemi *existujících* hodnot.**
 
-## 2. Cassandra: Praktický Příklad
+## 2 Cassandra: Praktický Příklad
 
 Tento příklad ukazuje, jak nastavit Cassandra a Stargate pomocí Dockeru, připojit se k databázi pomocí `cqlsh` a provádět základní operace.
 
