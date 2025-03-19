@@ -1,4 +1,4 @@
-# README - Sloupcové (Column-Family) Databáze
+# Sloupcové (Column-Family) Databáze
 
 ## 1. Sloupcové Databáze: Teorie
 
@@ -508,4 +508,4 @@ Následující příklady předpokládají, že máte spuštěný Stargate a Cas
     *   Připojte se k Cassandra přes Stargate pomocí `cqlsh` (přes `stargate` kontejner).
     *   Proveďte několik základních CQL operací (vytvoření klíčového prostoru, tabulky, vložení dat, výběr dat).
 
-10.  **(Diskuze):**  V jakých scénářích byste *nepoužili* Cassandra (nebo jinou sloupcovou databázi)?  Kdy byste dali přednost relační databázi? Kdy byste zvolili jiný typ NoSQL databáze (např. dokumentovou nebo key-value)? Uveďte konkrétní příklady. Jaké jsou výhody a nevýhody použití Stargate oproti přímému přístupu k Cassandra přes CQL?  V jakých situacích byste preferovali Stargate a v jakých přímý přístup?
+10.  **Diskuze:**  V jakých scénářích byste *nepoužili* Cassandra (nebo jinou sloupcovou databázi)?  Kdy byste dali přednost relační databázi? Kdy byste zvolili jiný typ NoSQL databáze (např. dokumentovou nebo key-value)? Uveďte konkrétní příklady. Jaké jsou výhody a nevýhody použití Stargate oproti přímému přístupu k Cassandra přes CQL?  V jakých situacích byste preferovali Stargate a v jakých přímý přístup?

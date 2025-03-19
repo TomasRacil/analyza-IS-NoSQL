@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  app:
+    container_name: ZODB
+    build: . # Použije Dockerfile v aktuálním adresáři
+    volumes:
+      - zodb_data:/app # Připojíme volume pro perzistenci dat
+    # stdin_open: true # Důležité pro interaktivní režim
+    # tty: true # Důležité pro interaktivní režim
+
+volumes:
+  # definujeme volume
+  zodb_data:

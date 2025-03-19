@@ -1,4 +1,4 @@
-# Databáze Klíč-Hodnota
+# Databáze Klíč-Hodnota (Hash)
 
 ## 1. Databáze Klíč-Hodnota: Teorie
 
@@ -48,7 +48,11 @@ Databáze klíč-hodnota (key-value store) jsou nejjednodušším typem NoSQL da
 *   **Memcached:**  In-memory key-value store zaměřený na *čisté cachování*.  Podporuje pouze řetězce jako hodnoty.
 *   **Riak KV:**  Distribuovaná key-value databáze zaměřená na vysokou dostupnost a odolnost proti chybám.
 *   **Amazon DynamoDB:**  Plně spravovaná key-value a dokumentová databáze nabízená jako služba na AWS.
-*   **LevelDB:**  Rychlá key-value storage knihovna od Googlu, často používaná jako *úložiště* pro jiné databáze.
+*   **LevelDB a RocksDB (Key-Value *Knihovny*):**
+    *   **LevelDB:** Rychlá key-value storage *knihovna* od Googlu. Není to samostatný server, ale *knihovna*, která se vkládá do vaší aplikace.  Používá Log-Structured Merge-Tree (LSM-Tree) pro optimalizaci zápisů a udržuje klíče *seřazené*. Je vhodný pro embedded systémy a jako úložiště pro jiné databáze.
+    *   **RocksDB:** Fork LevelDB od Facebooku, optimalizovaný pro SSD a vysokou zátěž.  Také knihovna, ne server.  Široce používaný (např. v CockroachDB, Apache Cassandra – dříve, Flink, atd.).
+    *   **Klíčové rozdíly oproti Redis:** LevelDB/RocksDB jsou *knihovny* (ne servery), nemají nativní síťový přístup (musí se integrovat do aplikace), jsou optimalizované pro perzistentní uložení na disku (i když mohou využívat i RAM), a nepodporují tak širokou škálu datových typů jako Redis (jen klíč-hodnota, kde klíč i hodnota jsou bajtová pole).
+
 
 ### 1.4 Kdy je databáze klíč-hodnota (jako Redis) lepší volbou než relační?
 *   **Cachování:**  Ukládání často používaných dat (např. výsledky dotazů do databáze, data relace) v paměti pro rychlý přístup.
@@ -257,8 +261,9 @@ Pravděpodobnostní datová struktura pro odhad kardinality (počet unikátních
 PFADD myHLL item1 item2 item1 item3
 PFCOUNT myHLL #Vrátí odhad 3
 ```
-* `PFADD` Přidá prvek
-* `PFCOUNT` vrátí odhad
+* `PFADD` Přidá prvek do HyperLogLog. Opakované přidání stejného prvku nemá vliv.
+* `PFCOUNT` Vrátí odhadovaný počet unikátních prvků.
+* `PFMERGE` Spojí více HyperLogLog struktur do jedné (užitečné pro distribuované počítání).
 
 ### Expirace klíčů (TTL)
 
@@ -273,10 +278,11 @@ PFCOUNT myHLL #Vrátí odhad 3
     ```redis
     SETEX mykey2 60 "hodnota" #Alternativní příkaz, který kombinuje SET a EX.
     ```
-    * `EX` nastaví timeout v sekundách
-    * `TTL` zjistí timeout, -1 znamená, že timeout není, -2, že klíč neexistuje.
-
-Ok, pokračujeme od místa, kde jsem skončil, tedy rozšiřuji předchozí odpověď o transakce, perzistenci, replikaci, Redis Cluster, pub/sub, a pak přidám úkoly.
+    * `EX` (nebo `SETEX`) Nastaví expiraci v sekundách.
+    * `PX` (nebo `PSETEX`) Nastaví expiraci v milisekundách.
+    * `TTL` Vrátí zbývající čas do vypršení (v sekundách). -1 znamená, že klíč nemá nastavenou expiraci. -2 znamená, že klíč neexistuje.
+    * `PTTL` Vrátí zbývající čas do vypršení v milisekundách.
+    * `PERSIST` Odstraní expiraci.
 
 ### Transakce
 
