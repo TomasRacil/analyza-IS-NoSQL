@@ -1,0 +1,44 @@
+[
+    {
+        "_from": "users/bob",
+        "_to": "users/alice",
+        "since": "2023-01-15",
+        "type": "friend"
+    },
+    {
+        "_from": "users/alice",
+        "_to": "users/charlie",
+        "since": "2023-02-20",
+        "type": "friend"
+    },
+    {
+        "_from": "users/charlie",
+        "_to": "users/alice",
+        "since": "2023-02-20",
+        "type": "friend"
+    },
+    {
+        "_from": "users/bob",
+        "_to": "users/david",
+        "since": "2023-03-10",
+        "type": "friend"
+    },
+    {
+        "_from": "users/david",
+        "_to": "users/bob",
+        "since": "2023-03-10",
+        "type": "friend"
+    },
+    {
+        "_from": "users/charlie",
+        "_to": "users/david",
+        "since": "2024-01-15",
+        "type": "knows"
+    },
+    {
+        "_from": "users/eva",
+        "_to": "users/bob",
+        "since": "2024-01-02",
+        "type": "friend"
+    }
+]

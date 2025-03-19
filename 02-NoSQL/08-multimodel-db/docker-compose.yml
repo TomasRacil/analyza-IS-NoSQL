@@ -1,0 +1,16 @@
+version: '3.9' # Můžete použít i starší verzi, pokud je potřeba
+
+services:
+  arangodb:
+    image: arangodb/arangodb:latest # Používá nejnovější verzi ArangoDB
+    container_name: arangodb-instance
+    ports:
+      - "8529:8529" # Mapuje port 8529 (webové rozhraní)
+    environment:
+      - ARANGO_ROOT_PASSWORD=mysecretpassword # Nastaví heslo pro uživatele root (Změňte na bezpečné heslo!)
+    volumes:
+      - arangodb_data:/data/db # Persistentní ukládání dat (viz níže)
+    restart: on-failure # Automaticky restartuje kontejner při selhání
+
+volumes:
+  arangodb_data: # Definice persistentního volume pro data

@@ -1,0 +1,36 @@
+[
+    {
+        "_key": "charlie",
+        "name": "Charlie Brown",
+        "email": "[e-mailová adresa byla odstraněna]",
+        "age": 35,
+        "interests": [
+            "hiking",
+            "travel",
+            "cooking"
+        ]
+    },
+    {
+        "_key": "david",
+        "name": "David Miller",
+        "email": "[e-mailová adresa byla odstraněna]",
+        "age": 28,
+        "interests": [
+            "gaming",
+            "photography",
+            "movies"
+        ]
+    },
+    {
+        "_key": "eva",
+        "name": "Eva Green",
+        "email": "[e-mailová adresa byla odstraněna]",
+        "age": 22,
+        "interests": [
+            "reading",
+            "music",
+            "coding",
+            "photography"
+        ]
+    }
+]

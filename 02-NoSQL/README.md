@@ -195,26 +195,26 @@ Podívejme se na jednotlivé typy NoSQL databází podrobněji:
      * **Výhody:** Přirozené mapování na objekty v kódu, snadná práce se složitými daty.
      * **Nevýhody:** Menší rozšířenost než jiné typy databází, omezená škálovatelnost.
 
-7. **Multi-model Databáze:**
-     * **Datový Model:** Kombinují více datových modelů (např. dokumentový, grafový, klíč-hodnota) v jedné databázi.
-     * **Příklady:** ArangoDB, OrientDB, Cosmos DB, FoundationDB.
-     * **Použití:** Aplikace, které potřebují různé datové modely pro různé části dat.
-     * **Výhody:** Flexibilita, možnost použít nejvhodnější datový model pro daný úkol.
-     * **Nevýhody:** Složitější správa a učení, potenciální problémy s výkonem při kombinování různých modelů.
-
-8. **Time Series Databáze (TSDB):**
+7. **Time Series Databáze (TSDB):**
      *  **Datový Model:** Specializované databáze optimalizované pro ukládání a dotazování na časové řady dat (data, která se mění v čase). Data jsou obvykle uložena jako páry (časová značka, hodnota).
      * **Příklady:** InfluxDB, Prometheus, TimescaleDB (rozšíření PostgreSQL), OpenTSDB.
      * **Použití**: Monitorování systémů, IoT, finanční data, průmyslová data.
      * **Výhody:** Vysoký výkon pro zápis a čtení časových řad, efektivní ukládání a komprese dat, specializované funkce pro práci s časovými řadami (agregace, interpolace, downsampling).
      * **Nevýhody**: Omezené použití mimo oblast časových řad.
 
-9. **Spatial Databáze:**
+8. **Spatial Databáze:**
    * **Datový Model:** Specializované databáze optimalizované pro ukládání a dotazování na prostorová data (geografické souřadnice, tvary, polygony). Umožňují provádět prostorové dotazy (např. nalezení všech bodů v určité oblasti, nalezení nejbližšího bodu).
     * **Příklady:** PostGIS (rozšíření PostgreSQL), MongoDB (má podporu pro GeoJSON), Elasticsearch (s pluginem).
     * **Použití:** Geografické informační systémy (GIS), mapové aplikace, logistika.
     *  **Výhody:** Efektivní práce s prostorovými daty, podpora prostorových indexů a dotazů.
     * **Nevýhody:** Omezené použití mimo oblast prostorových dat.
+
+9. **Multi-model Databáze:**
+     * **Datový Model:** Kombinují více datových modelů (např. dokumentový, grafový, klíč-hodnota) v jedné databázi.
+     * **Příklady:** ArangoDB, OrientDB, Cosmos DB, FoundationDB.
+     * **Použití:** Aplikace, které potřebují různé datové modely pro různé části dat.
+     * **Výhody:** Flexibilita, možnost použít nejvhodnější datový model pro daný úkol.
+     * **Nevýhody:** Složitější správa a učení, potenciální problémy s výkonem při kombinování různých modelů.
 
 ## CAP teorém
 
