@@ -7,11 +7,11 @@ V tomto předmětu se budeme zabývat moderními přístupy k ukládání a zpra
 **Cíle předmětu:**
 
 *   Pochopit principy NoSQL databází a jejich rozdíly oproti relačním databázím.
-*   Seznámit se s různými typy NoSQL databází (dokumentové, sloupcové, grafové, hashovací).
-*   Naučit se pracovat s konkrétními NoSQL systémy (CouchDB, MongoDB, ..).
+*   Seznámit se s různými typy NoSQL databází (dokumentové, sloupcové, grafové, hashovací, ...).
+*   Naučit se pracovat s konkrétními NoSQL systémy (CouchDB, Neo4j, ...).
 *   Porozumět konceptům jako MapReduce, replikace a distribuované zpracování.
 *   Získat přehled o nástrojích pro práci s Big Data (Apache Spark, Solr).
-*   Procvičit si získané znalosti na praktických úkolech a projektu.
+*   Procvičit si získané znalosti na praktických úkolech.
 
 ## Struktura předmětu
 
@@ -23,34 +23,37 @@ Kurz je rozdělen do tří hlavních tématických bloků:
     *   Sloupcové databáze.
     *   Grafové databáze.
     *   Hashovací (klíč-hodnota) databáze.
+    *   Objektové databáze.
+    *   Time series databáze.
+    *   Spatial databáze.
+
+2.  **Systémy a nástroje:**
+    *   REST API a JSON formát.
     *   MapReduce.
     *   Replikace.
     *   Distribuované zpracování.
-
-2.  **Systémy a nástroje (CouchDB, MongoDB):**
-    *   Instalace a konfigurace CouchDB a MongoDB (s využitím Dockeru).
-    *   Práce s daty v CouchDB a MongoDB (vkládání, dotazování, aktualizace, mazání).
-    *   REST API a JSON formát.
+    *   ...
 
 3.  **Ukládání rozsáhlých kolekcí dat (Big Data):**
     *   Úvod do problematiky Big Data.
     *   Apache Spark (základy, RDD, DataFrame, Spark SQL).
     *   Apache Solr (fulltextové vyhledávání).
+    *   ...
 
-V předmětu budeme používat nástroje Git a Docke, předpokládá se že těmto nástrojům již rozumíte.
+V předmětu budeme používat nástroje Git a Docker, předpokládá se, že těmto nástrojům již rozumíte. Pokud ne projděte se materiály ve složce `00-predpoklady`.
 
 ## Hodnocení
 
 Vaše hodnocení v tomto předmětu bude založeno na následujících aktivitách:
 
-*   **Dva menší úkoly (2 x 25% = 50%):**  Tyto úkoly budou zaměřeny na procvičení konkrétních témat probíraných v jednotlivých blocích. Termín a způsob odevzdání úkolu bude vždy definován při jeho zadání.
-*   **Jeden větší projekt (50%):**  Na konci semestru budete odevzdávat a prezentovat větší projekt, který bude vyžadovat integraci znalostí z celého předmětu.  Projekt bude také odevzdáván prostřednictvím GitHubu. Zadání, které si navrhnete sami, od vás obdržím do 4 týdnů od zahájení předmětu (tzn. 17.4.2025). Projekt je třeba odevzdat nejpozději dva týdny po poslední hodině (tzn. 3.7.2025)
+*   **Dvě prezentační vystoupení (2 x 25% = 50%):**  V průběhu semestru bude každý student dvakrát prezentovat na hodině vybraný koncept, který byl probírán v rámci kurzu. Cílem je ukázat reálné a praktické využití tohoto konceptu. Prezentace v délce 10-15 minut. Student si vybere koncept z probírané látky (např. "Implementace REST API pro správu uživatelů", "Caching s Redisem", atd.).
+*   **Výstupní test (50%):**  Na konci semestru budete psát výstupní test, který prověří vaše znalosti z celého předmětu. Test bude pokrývat témata ze všech tří bloků kurzu (NoSQL systémy, Systémy a nástroje, Ukládání rozsáhlých kolekcí dat). Na termínu testu se domlluvíme ke konci předmětu.
 
-K splnění předmětu a udělení zápočtu musíte získat více jak 60% bodů.
+K splnění předmětu a udělení zápočtu musíte získat více jak *60% bodů*.
 
 ## Motivační příklad: Jednoduchý webový server s MongoDB
 
-Nyní si pomocí Dockeru spustíme jednoduchou aplikaci, která kombinuje webový server (Nginx) a NoSQL databázi (MongoDB). Tato aplikace bude sloužit jako *velmi* zjednodušený příklad ukládání a zobrazování dat.  Nebudeme se zabývat detaily kódu aplikace (to přijde později), ale zaměříme se na to, jak Docker usnadňuje spuštění a propojení těchto dvou komponent.
+Nyní si pomocí Dockeru spustíme jednoduchou aplikaci, která kombinuje webový server (Nginx) a NoSQL databázi (MongoDB). Tato aplikace bude sloužit jako *velmi* zjednodušený příklad ukládání a zobrazování dat.  Nebudeme se zabývat detaily kódu aplikace.
 
 **Klonování repozitáře:**
 
@@ -66,16 +69,18 @@ cd <název_repozitáře>  # Obvykle stejný jako název repozitáře na GitHubu
 Po naklonování byste měli vidět následující strukturu (nebo velmi podobnou - může se v průběhu kurzu měnit):
 
 ```
-AnalyzaISNoSQL/  <-- Hlavní adresář repozitáře
-├── 01_MotivacniPriklad/
-│    ├── docker-compose.yml
-│    ├── index.html
-│    └── README.md <-- Nyní si otevřete tento soubor
+analyza-IS-NoSQL/  <-- Hlavní adresář repozitáře
+├── 01-uvodni-hodina/
+│    ├── README.md  <-- Dokument, který právě čtete.
+│    └── motivacni-priklad
+│        ├── docker-compose.yml
+│        ├── index.html
+│        └── README.md <-- Nyní si otevřete tento soubor
 ├── README.md  <-- Tento soubor
 └── ... (další lekce a materiály)
 ```
 
-Po naklonování si otevřete soubor `README.md`, který je v složce `01_MotivacniPriklad`.
+Po naklonování si otevřete soubor `README.md`, který je v složce `01-uvodni-hodina/motivacni-priklad`.
 
 ## Příprava na příští hodinu
 
@@ -83,6 +88,5 @@ Po naklonování si otevřete soubor `README.md`, který je v složce `01_Motiva
 2. **Nainstalujte si Docker**. Doporučuji Docker Desktop: [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/).
 3.  **Nahrajte strukturu adresářů** (včetně souborů `docker-compose.yml` a `index.html`) na váš GitHub repozitář.
 4. **Vyzkoušejte si spuštění ukázkové aplikace** pomocí `docker-compose up -d`.
-5. **První malý úkol:** Nainstalujte si docker a zprovozněte hello-world. Návod naleznete zde [https://docs.docker.com/get-started/](https://docs.docker.com/get-started/). Výsledek v podobě screenshotu nahrajte do vašeho repositáře do složky `ukoly/01`.
 
 ---

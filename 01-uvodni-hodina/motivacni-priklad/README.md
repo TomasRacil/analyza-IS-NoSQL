@@ -18,20 +18,10 @@ Cílem tohoto příkladu je ukázat základní principy:
 
 *   **`docker-compose.yml`:** Definuje služby (Nginx, Node.js backend, MongoDB), jejich konfiguraci a propojení.
 *   **`index.html`:** HTML soubor s JavaScriptem, který komunikuje s Node.js backendem.
-* **`backend/`**: Adresář obsahující soubory pro Node.js backend
+*   **`backend/`**: Adresář obsahující soubory pro Node.js backend
     * **`backend/index.js`**: Kód Node.js serveru.
     * **`backend/Dockerfile`**: Dockerfile pro sestavení image Node.js backendu.
     * **`backend/package.json`**: Soubor popisující Node.js projekt a jeho závislosti.
-
-## Obsah souborů
-
-(Zde by mohly být znovu uvedeny *zkrácené* verze souborů, nebo jen odkazy na ně, abychom se neopakovali.  Pro studenty je lepší mít *celý* kód na jednom místě (v souborech), než ho hledat rozkouskovaný v README.)
-
-*   **`docker-compose.yml`:** (Viz kompletní verze v předchozích odpovědích)
-*   **`index.html`:** (Viz kompletní verze v předchozích odpovědích)
-*  **`backend/index.js`**: (Viz kompletní verze v předchozích odpovědích)
-* **`backend/Dockerfile`**: (Viz kompletní verze v předchozích odpovědích)
-* **`backend/package.json`**: (Viz kompletní verze v předchozích odpovědích)
 
 ## Spuštění
 

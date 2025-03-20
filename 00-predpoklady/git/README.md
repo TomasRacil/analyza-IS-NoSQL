@@ -39,7 +39,7 @@ Existuje mnoho systémů pro správu verzí, ale Git je zdaleka nejoblíbenějš
 *   **Pull:**  Pull je stažení změn ze vzdáleného repozitáře do vaší lokální kopie.
 *   **Fetch:** Fetch stáhne metadata o změnách ve vzdáleném repozitáři, ale *neaplikuje* je na vaši lokální pracovní kopii.
 *   **Merge:**  Merge je sloučení změn z jedné větve do druhé.
-*   **Konflikt (Conflict):**  Konflikt nastane, když se dva vývojáři pokusí změnit stejnou část souboru stejným způsobem.  Git nedokáže automaticky rozhodnout, která verze je správná, a konflikt musí vyřešit ručně vývojář.
+*   **Konflikt (Conflict):**  Konflikt nastane, když se dva vývojáři pokusí změnit stejnou část souboru různým způsobem.  Git nedokáže automaticky rozhodnout, která verze je správná, a konflikt musí vyřešit ručně vývojář.
 * **.gitignore:** Soubor, který specifikuje soubory a adresáře, které má Git ignorovat (tj. nesledovat jejich změny). Typicky se do .gitignore přidávají dočasné soubory, soubory generované build systémem, soubory s hesly, atd.
 
 ## Instalace Gitu
@@ -177,9 +177,9 @@ Pokud tento krok přeskočíte, Git použije výchozí systémový editor (což 
         ```
 
     *   **Přidání vzdáleného repozitáře:**
-      ```bash
+        ```bash
         git remote add origin <URL_REPOZITARE>  # 'origin' je obvyklý název pro vzdálený repozitář
-      ```
+        ```
 
     * **Odeslání změn (push):**
         ```bash

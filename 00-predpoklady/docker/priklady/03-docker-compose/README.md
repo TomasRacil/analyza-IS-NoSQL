@@ -1,6 +1,6 @@
 # Příklad 03: Docker Compose
 
-Tento příklad ukazuje, jak použít Docker Compose pro spuštění jednoduché aplikace s webovým serverem (Nginx) a jednoduchou "databází" (textový soubor).  Je to velmi zjednodušená verze příkladu z úvodní hodiny, ale ukazuje základní principy Docker Compose.
+Tento příklad ukazuje, jak použít Docker Compose pro spuštění jednoduché aplikace s webovým serverem (Nginx) a jednoduchou "databází" (JSON soubor).
 
 ## Struktura
 
@@ -46,9 +46,11 @@ Tento příklad ukazuje, jak použít Docker Compose pro spuštění jednoduché
     </html>
     ```
 
-* **`data.txt`:**
-    ```
-    Toto jsou data z mé "databáze".
+* **`data.json`:**
+    ```json
+    {
+    "message": "Toto jsou data z mé 'databáze'."
+    }
     ```
 
 ## Spuštění

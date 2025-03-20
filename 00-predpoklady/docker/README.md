@@ -26,7 +26,7 @@ Předtím, než začnete s Dockerem, je potřeba ho nainstalovat. Doporučený z
 *   **Po instalaci spusťte Docker Desktop.**  (Na Windows a macOS se obvykle objeví ikona velryby v oznamovací oblasti/menu baru.)
 *   **Ověřte instalaci:** Otevřete terminál (nebo příkazový řádek) a zadejte příkaz `docker --version`. Měla by se vypsat verze Dockeru.
 
-**Alternativní instalace (pro pokročilé uživatele, zejména na Linuxu):**
+**Alternativní instalace (Linux):**
 
 Pokud nechcete používat Docker Desktop, můžete Docker Engine nainstalovat přímo. Postup se liší podle distribuce Linuxu.  Instrukce naleznete v oficiální dokumentaci Dockeru: [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/)
 

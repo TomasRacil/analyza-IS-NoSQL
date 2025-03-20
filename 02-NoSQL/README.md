@@ -2,7 +2,7 @@
 
 ## Úvod
 
-V minulé lekci jsme si ukázali praktický příklad s MongoDB, což je *NoSQL* databáze.  Dnes se podíváme podrobněji na to, co NoSQL databáze vlastně jsou, jaké jsou jejich typy, výhody, nevýhody a v čem se liší od tradičních relačních databází.  Půjdeme více do hloubky a probereme i pokročilejší koncepty.
+V dříve jsme si ukázali praktický příklad s MongoDB, což je *NoSQL* databáze.  Nyní se podíváme podrobněji na to, co NoSQL databáze vlastně jsou, jaké jsou jejich typy, výhody, nevýhody a v čem se liší od tradičních relačních databází.  Půjdeme více do hloubky a probereme i pokročilejší koncepty.
 
 ## Co je NoSQL?
 
@@ -17,56 +17,54 @@ NoSQL (Not Only SQL) je obecný termín pro databáze, které nepoužívají tra
 *   **Rychlý vývoj:** Kratší vývojové cykly a agilní přístup.
 
 + **Příklad flexibilního schématu (dokumentová databáze):**
-+ Představte si, že ukládáte informace o uživatelích. V relační databázi byste museli předem definovat tabulku se sloupci jako `id`, `jmeno`, `prijmeni`, `email`.  V NoSQL dokumentové databázi můžete mít dokumenty s různou strukturou:
++ Představte si, že ukládáte informace o uživatelích. V relační databázi byste museli předem definovat tabulku se sloupci jako `id`, `jmeno`, `prijmeni`, `email`. V NoSQL dokumentové databázi můžete mít dokumenty s různou strukturou:
 
-```json
-// Uživatel 1
-{
-  "_id": 1,
-  "jmeno": "Jan",
-  "prijmeni": "Novák",
-  "email": "[e-mailová adresa byla odstraněna]"
-}
+    ```json
+    // Uživatel 1
+    {
+    "_id": 1,
+    "jmeno": "Jan",
+    "prijmeni": "Novák",
+    "email": "[e-mailová adresa byla odstraněna]"
+    }
 
-// Uživatel 2 (má navíc telefon a oblíbené barvy)
-{
-  "_id": 2,
-  "jmeno": "Anna",
-  "prijmeni": "Veselá",
-  "telefon": "123456789",
-  "oblibeneBarvy": ["modrá", "zelená"]
-}
-```
+    // Uživatel 2 (má navíc telefon a oblíbené barvy)
+    {
+    "_id": 2,
+    "jmeno": "Anna",
+    "prijmeni": "Veselá",
+    "telefon": "123456789",
+    "oblibeneBarvy": ["modrá", "zelená"]
+    }
+    ```
 Nemusíte provádět žádné změny schématu, abyste mohli uložit uživatele s různými atributy.
 
 ## Relační vs. NoSQL databáze (Podrobnější srovnání)
 
-| Vlastnost                  | Relační databáze (RDBMS)                                                                                                                                                                                                           | NoSQL databáze                                                                                                                                                                                                                                                                                                 |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Datový model**           | Tabulky s řádky a sloupci, pevně definované schéma (schema-on-write).  Vztahy mezi tabulkami jsou definovány pomocí cizích klíčů.  Normalizace dat (eliminace redundance).                                                         | Různé: dokumentové, klíč-hodnota, sloupcové, grafové, ...  Schéma může být flexibilní (schema-on-read) nebo i úplně chybět (schemaless).  Data jsou často denormalizovaná (pro optimalizaci výkonu).                                                                                                           |
-| **Dotazovací jazyk**       | SQL (Structured Query Language) - standardizovaný jazyk pro dotazování a manipulaci s daty.                                                                                                                                        | Různé (závisí na typu databáze).  Některé mají vlastní dotazovací jazyky (např. MongoDB Query Language), jiné používají API (např. Redis).  Některé podporují i podmnožinu SQL nebo dialekty SQL (např. Cassandra Query Language - CQL).                                                                       |
-| **Konzistence**            | Silná konzistence (ACID vlastnosti).  Zaručuje, že data jsou vždy v konzistentním stavu.                                                                                                                                           | Často "eventual consistency" (konečná konzistence).  Data se nakonec stanou konzistentními, ale není zaručeno, že budou konzistentní v každém okamžiku.  Některé NoSQL databáze nabízejí i silnou konzistenci (nastavitelnou nebo jako výchozí), ale obvykle za cenu výkonu nebo dostupnosti.                  |
-| **Škálovatelnost**         | Obvykle vertikální (přidávání výkonu na jeden server – více RAM, CPU, diskového prostoru). Horizontální škálování (distribuce dat na více serverů) je složitější a dražší, vyžaduje specializované techniky (sharding, replikace). | Obvykle horizontální (snadné přidávání dalších serverů).  Navrženy pro distribuované prostředí.  Sharding a replikace jsou často vestavěné a snadno konfigurovatelné.                                                                                                                                          |
-| **Transakce**              | Podpora ACID transakcí (Atomicity, Consistency, Isolation, Durability) na úrovni více operací a tabulek.  Zajišťují integritu dat i při složitých operacích.                                                                       | Omezená nebo žádná podpora transakcí.  Některé NoSQL databáze podporují transakce na úrovni jednoho dokumentu nebo klíče (např. MongoDB).  Podpora transakcí přes více dokumentů/klíčů je vzácnější a obvykle méně výkonná než u RDBMS.                                                                        |
-| **Vztahy (Relationships)** | Vztahy mezi tabulkami jsou definovány pomocí cizích klíčů (foreign keys).  Relační integrita je vynucována databází.                                                                                                               | Vztahy se řeší různě (vnořené dokumenty, reference, ...).  Neexistuje jednotný způsob, jak definovat vztahy.  Aplikace obvykle musí sama zajistit konzistenci vztahů.  Některé NoSQL databáze (např. grafové) jsou přímo navrženy pro práci se složitými vztahy a překonávají v této oblasti relační databáze. |
-| **Použití**                | Aplikace, kde je důležitá integrita dat a konzistence (např. bankovnictví, účetnictví, ERP systémy).  OLTP (Online Transaction Processing) - aplikace s velkým množstvím transakcí.                                                | Aplikace, kde je důležitý výkon, škálovatelnost a flexibilita (např. sociální sítě, webové aplikace, IoT, Big Data).  OLAP (Online Analytical Processing) - analýza velkého množství dat, a další aplikace, kde není kritická absolutní konzistence dat v každém okamžiku, ale spíše rychlost a dostupnost.    |
-| **Náročnost na správu**    | Vyžaduje zkušené administrátory databází (DBA).  Správa schématu, optimalizace dotazů, zálohování a obnova dat jsou složitější.                                                                                                    | Často jednodušší na správu, zejména v cloudu (managed services).  Flexibilní schéma zjednodušuje vývoj a nasazení.  Automatické sharding a replikace zjednodušují škálování.                                                                                                                                   |
-| **Náklady**                | Licence na komerční RDBMS mohou být velmi drahé.  Náklady na hardware (pro vertikální škálování) mohou být také vysoké.                                                                                                            | Mnoho NoSQL databází je open source a zdarma k použití.  Horizontální škálování umožňuje používat levnější hardware (commodity hardware).  Cloudové služby (managed NoSQL databases) nabízejí flexibilní cenové modely (pay-as-you-go).                                                                        |
-| **Maturita**               | Relační databáze existují desítky let, jsou velmi dobře prověřené a existuje k nim rozsáhlá dokumentace, nástroje a odborníci.                                                                                                     | NoSQL databáze jsou relativně novější, ale rychle se vyvíjejí.  Některé NoSQL technologie jsou již velmi vyspělé, jiné jsou stále ve fázi vývoje.                                                                                                                                                              |
+| Vlastnost | Relační databáze (RDBMS) | NoSQL databáze |
+| - | - | - |
+| **Datový model** | Tabulky s řádky a sloupci, pevně definované schéma (schema-on-write). Vztahy mezi tabulkami jsou definovány pomocí cizích klíčů. Normalizace dat (eliminace redundance). | Různé: dokumentové, klíč-hodnota, sloupcové, grafové, ... Schéma může být flexibilní (schema-on-read) nebo i úplně chybět (schemaless). Data jsou často denormalizovaná (pro optimalizaci výkonu). |
+| **Dotazovací jazyk** | SQL (Structured Query Language) - standardizovaný jazyk pro dotazování a manipulaci s daty. | Různé (závisí na typu databáze). Některé mají vlastní dotazovací jazyky (např. MongoDB Query Language), jiné používají API (např. Redis). Některé podporují i podmnožinu SQL nebo dialekty SQL (např. Cassandra Query Language - CQL). |
+| **Konzistence** | Silná konzistence (ACID vlastnosti). Zaručuje, že data jsou vždy v konzistentním stavu. | Často "eventual consistency" (konečná konzistence). Data se nakonec stanou konzistentními, ale není zaručeno, že budou konzistentní v každém okamžiku. Některé NoSQL databáze nabízejí i silnou konzistenci (nastavitelnou nebo jako výchozí), ale obvykle za cenu výkonu nebo dostupnosti. |
+| **Škálovatelnost** | Obvykle vertikální (přidávání výkonu na jeden server – více RAM, CPU, diskového prostoru). Horizontální škálování (distribuce dat na více serverů) je složitější a dražší, vyžaduje specializované techniky (sharding, replikace). | Obvykle horizontální (snadné přidávání dalších serverů). Navrženy pro distribuované prostředí. Sharding a replikace jsou často vestavěné a snadno konfigurovatelné. |
+| **Transakce** | Podpora ACID transakcí (Atomicity, Consistency, Isolation, Durability) na úrovni více operací a tabulek. Zajišťují integritu dat i při složitých operacích. | Omezená nebo žádná podpora transakcí. Některé NoSQL databáze podporují transakce na úrovni jednoho dokumentu nebo klíče (např. MongoDB). Podpora transakcí přes více dokumentů/klíčů je vzácnější a obvykle méně výkonná než u RDBMS. |
+| **Vztahy (Relationships)** | Vztahy mezi tabulkami jsou definovány pomocí cizích klíčů (foreign keys). Relační integrita je vynucována databází. | Vztahy se řeší různě (vnořené dokumenty, reference, ...). Neexistuje jednotný způsob, jak definovat vztahy. Aplikace obvykle musí sama zajistit konzistenci vztahů. Některé NoSQL databáze (např. grafové) jsou přímo navrženy pro práci se složitými vztahy a překonávají v této oblasti relační databáze. |
+| **Použití** | Aplikace, kde je důležitá integrita dat a konzistence (např. bankovnictví, účetnictví, ERP systémy). OLTP (Online Transaction Processing) - aplikace s velkým množstvím transakcí. | Aplikace, kde je důležitý výkon, škálovatelnost a flexibilita (např. sociální sítě, webové aplikace, IoT, Big Data). OLAP (Online Analytical Processing) - analýza velkého množství dat, a další aplikace, kde není kritická absolutní konzistence dat v každém okamžiku, ale spíše rychlost a dostupnost. |
+| **Náročnost na správu** | Vyžaduje zkušené administrátory databází (DBA). Správa schématu, optimalizace dotazů, zálohování a obnova dat jsou složitější. | Často jednodušší na správu, zejména v cloudu (managed services). Flexibilní schéma zjednodušuje vývoj a nasazení. Automatické sharding a replikace zjednodušují škálování. |
+| **Náklady** | Licence na komerční RDBMS mohou být velmi drahé. Náklady na hardware (pro vertikální škálování) mohou být také vysoké. | Mnoho NoSQL databází je open source a zdarma k použití. Horizontální škálování umožňuje používat levnější hardware (commodity hardware). Cloudové služby (managed NoSQL databases) nabízejí flexibilní cenové modely (pay-as-you-go). |
+| **Maturita** | Relační databáze existují desítky let, jsou velmi dobře prověřené a existuje k nim rozsáhlá dokumentace, nástroje a odborníci. | NoSQL databáze jsou relativně novější, ale rychle se vyvíjejí. Některé NoSQL technologie jsou již velmi vyspělé, jiné jsou stále ve fázi vývoje. |
 
 ## Proč NoSQL? (Rozšířené důvody)
 
 Kromě již zmíněných důvodů (škálovatelnost, výkon, flexibilita, specializace), existují i další:
 
-*   **Data Variety (Různorodost dat):**  Moderní aplikace často pracují s různými typy dat (strukturovaná, polostrukturovaná, nestrukturovaná).  NoSQL databáze lépe zvládají ukládání a zpracování těchto různorodých dat.
-*   **Data Velocity (Rychlost dat):**  Data se často generují a mění velmi rychle (např. data ze senzorů, sociálních sítí). NoSQL databáze jsou navrženy tak, aby zvládaly vysokou rychlost zápisu a čtení.
-*   **Data Volume (Objem dat):**  Objem dat, se kterými aplikace pracují, neustále roste. NoSQL databáze jsou navrženy tak, aby zvládaly obrovské objemy dat (petabajty a více).
-*   **Cloud Computing:**  NoSQL databáze se dobře hodí pro cloudové prostředí, kde je důležitá elasticita (automatické škálování) a pay-as-you-go model.
-* **Agilní vývoj**: Schopnost přizpůsobovat datový model za běhu bez nutnosti migrace schématu se hodí agilnímu vývoji.
+*   **Data Variety (Různorodost dat):**  Moderní aplikace často pracují s různými typy dat (strukturovaná, polostrukturovaná, nestrukturovaná).  Většina NoSQL databází lépe zvládá ukládání a zpracování těchto různorodých dat.
+*   **Data Velocity (Rychlost dat):**  Data se často generují a mění velmi rychle (např. data ze senzorů, sociálních sítí). Existují NoSQL databáze navrženy tak, aby zvládaly vysokou rychlost zápisu a čtení.
+*   **Data Volume (Objem dat):**  Objem dat, se kterými aplikace pracují, neustále roste. Některé NoSQL databáze jsou navrženy tak, aby zvládaly obrovské objemy dat (petabajty a více).
+*   **Cloud Computing:**  Většina NoSQL databází se dobře hodí pro cloudové prostředí, kde je důležitá elasticita (automatické škálování) a pay-as-you-go model.
+*   **Agilní vývoj**: Schopnost přizpůsobovat datový model za běhu bez nutnosti migrace schématu se hodí agilnímu vývoji.
 
-## Typy NoSQL databází (Podrobněji)
-
-Podívejme se na jednotlivé typy NoSQL databází podrobněji:
+## Typy NoSQL databází
 
 1.  **Dokumentové databáze:**
 
@@ -211,7 +209,7 @@ Podívejme se na jednotlivé typy NoSQL databází podrobněji:
 
 9. **Multi-model Databáze:**
      * **Datový Model:** Kombinují více datových modelů (např. dokumentový, grafový, klíč-hodnota) v jedné databázi.
-     * **Příklady:** ArangoDB, OrientDB, Cosmos DB, FoundationDB.
+     * **Příklady:** ArangoDB, OrientDB, Cosmos DB, FoundationDB, FaunaDB.
      * **Použití:** Aplikace, které potřebují různé datové modely pro různé části dat.
      * **Výhody:** Flexibilita, možnost použít nejvhodnější datový model pro daný úkol.
      * **Nevýhody:** Složitější správa a učení, potenciální problémy s výkonem při kombinování různých modelů.
