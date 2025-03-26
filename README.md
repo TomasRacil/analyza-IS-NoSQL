@@ -6,8 +6,8 @@ Toto úložiště obsahuje materiály k předmětu zaměřenému na NoSQL datab�
 
 Výukové materiály jsou rozděleny do jednotlivých adresářů, které reprezentují jednotlivé lekce/témata:
 
-*   **`00-predpoklady/`**:  Obsahuje informace a instrukce k instalaci potřebného softwaru (Docker, Docker Compose) a základní seznámení s těmito nástroji.  *Toto je nutné projít před začátkem kurzu.*
-*   **`01-uvodni-hodina/`**:  Úvodní prezentace a materiály k první hodině – co jsou NoSQL databáze, základní typy, výhody a nevýhody, porovnání s relačními databázemi.
+*   **`00-predpoklady/`**:  Obsahuje informace a instrukce k instalaci potřebného softwaru (Git, Docker, Docker Compose) a základní seznámení s těmito nástroji.  *Toto je nutné projít před začátkem předmětu.*
+*   **`01-uvodni-hodina/`**:  Úvodní materíál k předmětu - jak bude předmět hodnoce, obsah předmětu.
 *   **`02-NoSQL/`**:  Obecný úvod do problematiky, typy NoSQL databází. Praktické příklady tohoto tématu.
 ...
 
@@ -34,12 +34,12 @@ Výukové materiály jsou rozděleny do jednotlivých adresářů, které reprez
 
 ## Cíle kurzu
 
-Po absolvování tohoto kurzu budete:
-
 *   Rozumět základním principům NoSQL databází.
 *   Umět si vybrat vhodný typ NoSQL databáze pro daný problém.
 *   Mít praktické zkušenosti s několika nejpoužívanějšími NoSQL databázemi (CouchDB, Redis, MongoDB, Neo4j, Cassandra, ..).
 *   Umět modelovat data v NoSQL databázích.
 *   Umět dotazovat se na data v NoSQL databázích.
 *   Být připraveni používat NoSQL databáze ve svých vlastních projektech.
+*   Rozumět základním nástrojům pro práci s daty
+*   Získat základní znalosti z oblasti BigData
 *   ...

@@ -54,7 +54,7 @@ Nemusíte provádět žádné změny schématu, abyste mohli uložit uživatele 
 | **Náklady** | Licence na komerční RDBMS mohou být velmi drahé. Náklady na hardware (pro vertikální škálování) mohou být také vysoké. | Mnoho NoSQL databází je open source a zdarma k použití. Horizontální škálování umožňuje používat levnější hardware (commodity hardware). Cloudové služby (managed NoSQL databases) nabízejí flexibilní cenové modely (pay-as-you-go). |
 | **Maturita** | Relační databáze existují desítky let, jsou velmi dobře prověřené a existuje k nim rozsáhlá dokumentace, nástroje a odborníci. | NoSQL databáze jsou relativně novější, ale rychle se vyvíjejí. Některé NoSQL technologie jsou již velmi vyspělé, jiné jsou stále ve fázi vývoje. |
 
-## Proč NoSQL? (Rozšířené důvody)
+## Proč NoSQL?
 
 Kromě již zmíněných důvodů (škálovatelnost, výkon, flexibilita, specializace), existují i další:
 
@@ -110,9 +110,9 @@ Kromě již zmíněných důvodů (škálovatelnost, výkon, flexibilita, specia
     *   **Použití:**
         *   **Caching:** Ukládání často používaných dat do paměti pro rychlý přístup (např. výsledky dotazů do databáze, HTML fragmenty).
         *   **Session management:** Ukládání informací o uživatelských relacích (např. přihlašovací údaje, obsah nákupního košíku).
-        *   **Ukládání uživatelských profilů (jednoduchých):**
-        *   **Nákupní košíky:**
-        * **Fronty zpráv**:
+        *   **Ukládání uživatelských profilů (jednoduchých):** TODO
+        *   **Nákupní košíky:** TODO
+        *   **Fronty zpráv**: TODO
     *   **Výhody:**
         *   **Extrémně rychlé čtení a zápis:**  Přístup k datům je velmi rychlý, protože se používá pouze klíč.
         *   **Jednoduché škálování:**  Snadné rozložení dat na více serverů.
@@ -135,9 +135,9 @@ Kromě již zmíněných důvodů (škálovatelnost, výkon, flexibilita, specia
         *   **Škálovatelnost:**  Snadné horizontální škálování.
         *   **Vhodné pro data s mnoha atributy:**  Efektivní ukládání dat, kde každý záznam může mít velké množství atributů (ale ne všechny atributy musí být vyplněny).
     *   **Nevýhody:**
-        *   **Složitější správa:**  Vyžaduje pečlivé plánování datového modelu.
+        <!-- *   **Složitější správa:**  Vyžaduje pečlivé plánování datového modelu. -->
         *   **Méně vhodné pro komplexní dotazy a transakce:**  Dotazování je obvykle omezeno na přístup k datům pomocí klíče řádku a rodiny sloupců.
-        * **Méně vhodné pro časté updaty na existujících sloupcích.**
+        *   **Méně vhodné pro časté updaty na existujících sloupcích.**
 
 4.  **Grafové databáze:**
 
@@ -149,7 +149,7 @@ Kromě již zmíněných důvodů (škálovatelnost, výkon, flexibilita, specia
         *   **Správa znalostí:**  Reprezentace a správa složitých vztahů mezi informacemi.
         *   **Detekce podvodů:**  Odhalování podezřelých vzorců chování v sítích transakcí nebo vztahů.
         *   **Analýza sítí:**  Analýza vztahů v různých typech sítí (např. dopravní sítě, telekomunikační sítě).
-        * **Správa oprávnění a rolí:** Reprezentace hierarchických struktur a vztahů mezi uživateli, rolemi a zdroji.
+        *   **Správa oprávnění a rolí:** Reprezentace hierarchických struktur a vztahů mezi uživateli, rolemi a zdroji.
 
     *   **Výhody:**
         *   **Efektivní práce se složitými vztahy:**  Grafové databáze jsou optimalizovány pro dotazy, které procházejí grafem a zkoumají vztahy mezi uzly.
@@ -188,7 +188,7 @@ Kromě již zmíněných důvodů (škálovatelnost, výkon, flexibilita, specia
 
 6. **Objektové Databáze:**
      * **Datový Model:** Ukládá data jako objekty, podobně jako v objektově orientovaném programování. Objekt může obsahovat atributy (data) a metody (funkce). Podporují dědičnost, polymorfismus a zapouzdření.
-     * **Příklady:** db4o, ObjectDB, Realm.
+     * **Příklady:** db4o, ObjectDB, Realm, ZODB.
      * **Použití:** Aplikace s komplexními datovými strukturami, kde je přirozené mapování na objekty v programovacím jazyce. CAD/CAM systémy, simulace.
      * **Výhody:** Přirozené mapování na objekty v kódu, snadná práce se složitými daty.
      * **Nevýhody:** Menší rozšířenost než jiné typy databází, omezená škálovatelnost.

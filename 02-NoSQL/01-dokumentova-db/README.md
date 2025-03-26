@@ -16,7 +16,7 @@ Dokumentové databáze ukládají data v *dokumentech*.  Tyto dokumenty jsou typ
 
 ```json
 {
-  "_id": "john_doe",   // Unikátní identifikátor dokumentu (povinný)
+  "_id": "john_doe",   // Unikátní identifikátor dokumentu (povinný) automaticky generovaný
   "name": "John Doe",
   "age": 30,
   "email": "[e-mailová adresa byla odstraněna]",
@@ -58,9 +58,9 @@ Dokumentové databáze ukládají data v *dokumentech*.  Tyto dokumenty jsou typ
 
 ### 1.3 Příklady Dokumentových Databází
 
-*   **MongoDB:**  Jedna z nejpopulárnějších dokumentových databází.  Používá BSON, má bohatý dotazovací jazyk, podporuje indexy, sharding (horizontální škálování), replikaci a (od verze 4.0) multi-document transakce.
-*   **Couchbase:**  Kombinuje vlastnosti key-value a dokumentových databází.  Zaměřuje se na výkon a škálovatelnost.
-*   **CouchDB:**  Zaměřuje se na spolehlivost, snadné použití a offline synchronizaci.  Používá JSON a HTTP API.  Vhodná pro mobilní aplikace.
+*   **MongoDB:**  Jedna z nejpopulárnějších dokumentových databází.  Používá BSON, má bohatý dotazovací jazyk, podporuje indexy, sharding (horizontální škálování), replikaci a (od verze 4.0) multi-document transakce. Často vnímána jako nejrozšířenější a nejuniverzálnější dokumentová DB.
+*   **Couchbase:**  Kombinuje vlastnosti key-value a dokumentových databází.  Zaměřuje se na výkon a škálovatelnost, , často používaná pro caching a aplikace vyžadující nízkou latenci.
+*   **CouchDB:**  Zaměřuje se na spolehlivost, snadné použití a offline synchronizaci.  Používá JSON a HTTP API.   Vhodná pro mobilní aplikace díky vynikající podpoře replikace a synchronizace (včetně offline).
 *   **Amazon DocumentDB:**  Dokumentová databáze kompatibilní s MongoDB API, nabízená jako služba na AWS.
 *   **Azure Cosmos DB:**  Multi-model databáze od Microsoftu, která podporuje různé datové modely, včetně dokumentového.
 
@@ -97,7 +97,7 @@ Tento příklad ukazuje, jak naplnit CouchDB databázi, a detailně se věnuje d
 ### Struktura
 
 *   **`docker-compose.yml`:** Definuje službu CouchDB.
-*   **`data/users.json`:** JSON soubor s ukázkovými daty.
+*   **`data.json`:** JSON soubor s ukázkovými daty.
 
 ### Spuštění
 
@@ -366,37 +366,118 @@ Mango queries jsou *jednodušší* na zápis pro běžné dotazy.
 1.  **Prozkoumejte data:**  Prohlédněte si dokumenty v databázi.  Všimněte si, jak je u uživatelů definováno propojeni s příspěvky.
 
 2.  **Základní dotazy (Mango):**
-    *   Najděte všechny uživatele starší 28 let.
-    *   Najděte uživatele se jménem "John Doe".
-    *   Najděte všechny příspěvky (v kolekci `posts`).
+    * Najděte všechny uživatele (dokumenty s `type: "user"`).
+    * Najděte všechny příspěvky (dokumenty s `type: "post"`).
+    * Najděte uživatele se jménem "Jane Doe".
+    * Najděte všechny uživatele starší než 28 let.
+    * Najděte všechny příspěvky od autora `john_doe`.
 
-3.  **Vytvoření View (MapReduce):**
-    *   **`users_by_name`:** Vytvořte view, který indexuje uživatele podle jména (`name`).  Map funkce:
+3.  **Pokročilejší dotazy (Mango Queries):**
+    * Najděte uživatele, kteří mají jako hobby "coding" *nebo* "hiking" (použijte operátor `$or` nebo `$in`).
+    * Najděte uživatele, kteří bydlí ve městě "Anytown" *a zároveň* jsou starší než 25 let (použijte `$and` implicitně nebo explicitně a dotaz na vnořené pole `address.city`).
+    * Najděte příspěvky, které obsahují tag "couchdb" (předpokládáme, že `tags` je pole řetězců, použijte `$in` nebo `$all` pokud byste chtěli příspěvky s *všemi* zadanými tagy).
+    * Získejte *pouze* jména a emaily všech uživatelů (použijte `fields`).
+    * Najděte 5 nejmladších uživatelů (použijte `sort` a `limit`).
+    * Najděte uživatele, jejichž jméno *nezačíná* na "P" (použijte `$regex` a `$not`).
+    * Najděte uživatele, kteří *nemají* definované pole `email` (použijte `{"email": {"$exists": false}}`).
 
+4.  **Vytvoření a použití Mango Indexů:**
+    * Vytvořte Mango index (typ `json`) pro pole `type` a `age` v databázi `mydb`.
+    * Vytvořte Mango index pro pole `type` a `author` v databázi `mydb`.
+    * Vytvořte Mango index pro pole `type` a `tags` v databázi `mydb`.
+    * Spusťte znovu některé z předchozích Mango dotazů a ověřte si (pomocí `/_explain` endpointu nebo ve Fauxtonu), že se vytvořené indexy používají.
+
+5.  **Vytvoření a použití Views (MapReduce):**
+    * **`users/by_name`:** Vytvořte view v design dokumentu `_design/users`, které indexuje uživatele podle jména (`name`).
         ```javascript
+        // Map funkce pro users/by_name
         function (doc) {
-          if (doc.name) {
-            emit(doc.name, null);
+          if (doc.type === 'user' && doc.name) {
+            emit(doc.name, null); // Klíč: jméno, Hodnota: null (nepotřebujeme ji zde)
           }
         }
         ```
+        Otestujte view pomocí `curl` – najděte uživatele se jménem "Jane Doe". Zkuste také najít uživatele se jmény v určitém rozsahu (např. od "A" po "K") pomocí `startkey` a `endkey`.
+    * **`posts/by_author`:** Vytvořte view v design dokumentu `_design/posts`, které indexuje příspěvky podle ID autora.
+        ```javascript
+        // Map funkce pro posts/by_author
+        function (doc) {
+          if (doc.type === 'post' && doc.author) {
+            emit(doc.author, doc.title); // Klíč: ID autora, Hodnota: název příspěvku
+          }
+        }
+        ```
+        Otestujte view pomocí `curl` – najděte všechny příspěvky (názvy) od uživatele `john_doe` (použijte parametr `key`).
+    * **`posts/by_tag`:** Vytvořte view `posts/by_tag`, které indexuje příspěvky podle jednotlivých tagů.
+        ```javascript
+        // Map funkce pro posts/by_tag
+        function (doc) {
+          if (doc.type === 'post' && doc.tags && Array.isArray(doc.tags)) {
+            doc.tags.forEach(function(tag) {
+              emit(tag, {title: doc.title, author: doc.author}); // Klíč: tag, Hodnota: objekt s názvem a autorem
+            });
+          }
+        }
+        ```
+        Otestujte view – najděte všechny příspěvky s tagem "nosql".
 
-    *   **Otestujte view:**  Pomocí `curl` najděte uživatele se jménem "Jane Doe".
+6.  **Agregace s MapReduce:**
+    * **`stats/count_users`:** Vytvořte view v `_design/stats`, které spočítá celkový počet uživatelů. Použijte jednoduchou map funkci (`emit(null, 1)`) a vestavěnou reduce funkci `_count`. Dotazujte se s `reduce=true`.
+        ```javascript
+        // Map funkce pro stats/count_users
+        function (doc) {
+          if (doc.type === 'user') {
+            emit(null, 1);
+          }
+        }
+        // Reduce funkce: _count (vestavěná)
+        ```
+    * **`stats/posts_per_author`:** Vytvořte view v `_design/stats`, které spočítá počet příspěvků *pro každého uživatele*.
+        ```javascript
+        // Map funkce pro stats/posts_per_author
+        function (doc) {
+          if (doc.type === 'post' && doc.author) {
+            emit(doc.author, 1); // Klíč: ID autora, Hodnota: 1
+          }
+        }
+        // Reduce funkce: _count (vestavěná)
+        ```
+        Otestujte view pomocí `curl` s parametrem `group=true`. Jaký je výsledek bez `group=true`?
+    * **(Pokročilé)** **`stats/average_age_by_city`**: Vytvořte view, které spočítá *průměrný věk* uživatelů v každém městě. Budete potřebovat *vlastní* reduce funkci.
+        ```javascript
+        // Map funkce pro stats/average_age_by_city
+        function (doc) {
+          if (doc.type === 'user' && doc.address && doc.address.city && doc.age) {
+            emit(doc.address.city, { sum: doc.age, count: 1 }); // Klíč: město, Hodnota: objekt se součtem a počtem
+          }
+        }
 
-4.  **Pokročilejší dotazy (Mango):**
-    *  Najděte uživatele s hobby "reading" *a* věkem menším než 35.  Použijte `$and`, `$in`, a `$lt`.
-    *   Získejte *pouze* jména a emaily uživatelů (projekce).
-    *   Seřaďte uživatele podle věku *sestupně*.
-    *   Najděte uživatele, jejichž jméno *nezačíná* na "P" (použijte `$regex` a negaci: `{ "name": { "$not": { "$regex": "^P" } } }`).
-    * **Najděte všechny příspěvky od autora "john_doe"**.
+        // VLASTNÍ Reduce funkce pro stats/average_age_by_city
+        function (keys, values, rereduce) {
+          var result = { sum: 0, count: 0 };
+          if (rereduce) {
+            // Fáze re-reduce: sčítáme před-agregované výsledky
+            for (var i = 0; i < values.length; i++) {
+              result.sum += values[i].sum;
+              result.count += values[i].count;
+            }
+          } else {
+            // Fáze reduce: sčítáme hodnoty z map fáze
+            for (var i = 0; i < values.length; i++) {
+              result.sum += values[i].sum; // values[i] je {sum: age, count: 1}
+              result.count += values[i].count;
+            }
+          }
+          // POZN: Průměr samotný zde nepočítáme, to uděláme až v aplikaci nebo dalším kroku
+          // Reduce funkce by měla vracet data ve stejném formátu, jako emituje map funkce (nebo jako dostává ve values)
+          return result;
+        }
+        ```
+        Dotazujte se s `group=true`. Výsledek bude obsahovat součet věků a počet uživatelů pro každé město. Průměr (`sum/count`) byste si spočítali až v aplikaci.
 
-5. **Vytvoření Mango Indexů:** Vytvořte indexy pro:
-     * Pole `age` v kolekci `users`
-     * Pole `name` v kolekci `users`.
-     * Pole `author` v kolekci `posts`.
+7.  **Vztahy a "Application-Level Join":**
+    * Jak byste pomocí `curl` (nebo ve vaší aplikaci) získali data uživatele `john_doe` *a zároveň* seznam všech názvů jeho příspěvků? Popište kroky (kolik dotazů na databázi by bylo potřeba a jakých?).
 
-6. **(Pokročilé) Agregace s MapReduce:**
-   * Vytvořte view (MapReduce), který spočítá *celkový* počet příspěvků.  (Použijte `_count` reduce funkci.)
-   * **(Velmi pokročilé):** Vytvořte view, který spočítá počet příspěvků *pro každého uživatele*.  (Budete muset emitovat ID uživatele jako klíč a pak použít reduce funkci.)
-
-7. **(Diskuze) Kdy byste *nepoužili* CouchDB (nebo jinou dokumentovou databázi) pro tento typ aplikace (správa uživatelů a příspěvků)?**
+8.  **Diskuze:**
+    * Znovu se zamyslete: Kdy byste *nepoužili* CouchDB pro aplikaci spravující uživatele a příspěvky? Jaké konkrétní funkce by vám chyběly oproti relační databázi (např. SQL Server, PostgreSQL)?
+    * Jaké výhody naopak CouchDB přináší pro tento typ aplikace, zejména pokud by šlo o blogovací platformu s možností offline editace článků?
