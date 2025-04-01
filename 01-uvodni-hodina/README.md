@@ -84,9 +84,9 @@ Po naklonování si otevřete soubor `README.md`, který je v složce `01-uvodni
 
 ## Příprava na příští hodinu
 
-1.  **Založte si účet na GitHubu** (pokud ho ještě nemáte).
-2. **Nainstalujte si Docker**. Doporučuji Docker Desktop: [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/).
-3.  **Nahrajte strukturu adresářů** (včetně souborů `docker-compose.yml` a `index.html`) na váš GitHub repozitář.
-4. **Vyzkoušejte si spuštění ukázkové aplikace** pomocí `docker-compose up -d`.
+<!-- 1.  **Založte si účet na GitHubu** (pokud ho ještě nemáte). -->
+1. **Nainstalujte si Docker**. Doporučuji Docker Desktop: [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/).
+2.  **Stahněte si repozitář** na váš počítač.
+3. **Vyzkoušejte si spuštění ukázkové aplikace** pomocí `docker-compose up -d`.
 
 ---

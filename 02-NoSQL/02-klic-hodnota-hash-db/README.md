@@ -407,57 +407,70 @@ Redis podporuje *master-slave* replikaci.
 
 ### Úkoly
 
-1.  **Základní operace:**
-    *   Nastavte klíč `message` s hodnotou "Hello Redis".
-    *   Získejte hodnotu klíče `message`.
-    *   Smažte klíč `message`.
-    *   Nastavte čítač `visits` na 0.  Inkrementujte ho o 1.  Získejte hodnotu.
+1.  **Základní operace a Expirace:**
+    * Nastavte klíč `user:name` na vaše jméno.
+    * Nastavte klíč `session:123:user_id` na `5`. Nastavte mu expiraci (TTL) na 30 sekund pomocí `EXPIRE` nebo `SETEX`.
+    * Pomocí `TTL` ověřte zbývající čas. Počkejte déle než 30 sekund a zkuste získat hodnotu klíče `session:123:user_id` pomocí `GET`. Co se stane?
+    * Nastavte čítač `page_views:/home` na 100. Zvyšte ho o 5 pomocí `INCRBY`. Snižte ho o 1 pomocí `DECR`. Získejte aktuální hodnotu.
 
-2.  **Seznamy:**
-    *   Vytvořte seznam `tasks`.
-    *   Přidejte na konec seznamu úkoly "Nakoupit", "Uklidit", "Uvařit".
-    *   Získejte všechny prvky seznamu.
-    *   Odstraňte první úkol ze seznamu.
+2.  **Seznamy (Simulace fronty a historie):**
+    * Vytvořte seznam `log_messages`. Přidejte 5 různých logovacích zpráv na *začátek* seznamu pomocí `LPUSH`.
+    * Zobrazte posledních 5 zpráv (v pořadí, v jakém byly přidány) pomocí `LRANGE`.
+    * Simulujte zpracování zprávy: Odstraňte a získejte *nejstarší* zprávu ze seznamu (použijte `RPOP`).
+    * **(Bonus - fronta):** Zkuste použít `BRPOP log_messages 10`. Co příkaz dělá, pokud je seznam prázdný? (Vyzkoušejte v jednom terminálu `BRPOP` a v druhém `LPUSH` nějakou zprávu).
 
-3.  **Množiny:**
-    *   Vytvořte množinu `unique_users`.
-    *   Přidejte do ní uživatele "user1", "user2", "user1".
-    *   Zkontrolujte, zda je uživatel "user3" v množině.
-    *   Získejte všechny prvky množiny.
+3.  **Množiny (Správa tagů a unikátních návštěvníků):**
+    * Do množiny `tags:article:101` přidejte tagy "nosql", "redis", "database". Zkuste přidat "redis" znovu. Co se stane?
+    * Do množiny `tags:article:102` přidejte tagy "redis", "performance", "caching".
+    * Zkontrolujte, zda článek 101 obsahuje tag "java" pomocí `SISMEMBER`.
+    * Získejte všechny tagy pro článek 101 pomocí `SMEMBERS`.
+    * Najděte tagy, které jsou *společné* pro články 101 a 102 (použijte `SINTER`).
+    * Najděte *všechny unikátní* tagy použité v obou článcích (použijte `SUNION`).
+    * Kolik tagů má článek 101? (Použijte `SCARD`).
 
-4.  **Uspořádané množiny:**
-    *   Vytvořte uspořádanou množinu `leaderboard`.
-    *   Přidejte hráče "Alice" se skóre 100, "Bob" se skóre 80, "Charlie" se skóre 120.
-    *   Získejte všechny hráče a jejich skóre (seřazené vzestupně).
-    * Získejte všechny hráče se score mezi 90 a 110
-    *   Získejte všechny hráče a jejich skóre (seřazené *sestupně*).
+4.  **Uspořádané množiny (Žebříček a časové řady):**
+    * Vytvořte žebříček `game:scores`. Přidejte hráče: "Alice" (1500 bodů), "Bob" (1200), "Charlie" (1800), "David" (1500).
+    * Zobrazte Top 3 hráče (s nejvyšším skóre) včetně jejich skóre (použijte `ZREVRANGE ... WITHSCORES`).
+    * Zobrazte hráče se skóre mezi 1300 a 1600 (použijte `ZRANGEBYSCORE ... WITHSCORES`).
+    * Zvyšte skóre hráče "Bob" o 250 bodů (použijte `ZINCRBY`).
+    * Zjistěte aktuální skóre hráče "Alice" (`ZSCORE`).
+    * Zjistěte pořadí (rank) hráče "Bob" v žebříčku (od nejlepšího, tj. index 0 = nejvyšší skóre) (použijte `ZREVRANK`).
 
-5.  **Hashe:**
-    *   Vytvořte hash `user:100`.
-    *   Nastavte pole `name` na "John Doe", `age` na 30, `email` na "[e-mailová adresa byla odstraněna]".
-    *   Získejte hodnotu pole `name`.
-    *   Získejte všechna pole a hodnoty hashe.
+5.  **Hashe (Ukládání strukturovaných dat):**
+    * Uložte informace o uživateli s ID `user:99` do Hashe: `name`="Eva Novakova", `email`="[e-mailová adresa byla odstraněna]", `city`="Brno", `visits`=50. Použijte `HSET` nebo `HMSET` (starší verze).
+    * Získejte pouze email uživatele 99 (`HGET`).
+    * Získejte jméno a město uživatele 99 najednou (`HMGET`).
+    * Zvyšte počet návštěv (`visits`) uživatele 99 o 1 (použijte `HINCRBY`).
+    * Získejte všechna pole a hodnoty pro uživatele 99 (`HGETALL`).
+    * Zkontrolujte, zda má uživatel 99 nastavené pole `zip_code` (`HEXISTS`).
 
-6.  **Expirace:**
-    *   Nastavte klíč `temp_data` s hodnotou "Some data" a expirací 10 sekund.
-    *   Získejte zbývající čas do expirace.
+6.  **Kombinace typů (Profil uživatele):**
+    * Uložte základní data uživatele `user:7` jako Hash (jméno, email).
+    * Uložte seznam posledních 5 ID akcí uživatele `user:7` do Seznamu (List) s klíčem `user:7:recent_actions`. Použijte `LPUSH` a `LTRIM` k udržení pouze posledních 5 akcí.
+    * Uložte ID přátel uživatele `user:7` do Množiny (Set) s klíčem `user:7:friends`.
 
-7.  **Transakce:**
-    *   Pomocí `WATCH`, `MULTI`, `EXEC` a `INCR` proveďte následující:
-        1.  Sledujte klíč `counter`.
-        2.  Spusťte transakci.
-        3.  Získejte aktuální hodnotu `counter` (pomocí `GET` – pamatujte, že se nevykoná hned, ale zařadí do fronty).
-        4.  Inkrementujte `counter` o 1.
-        5.  Nastavte klíč `last_updated_by` na "user123".
-        6.  Spusťte transakci.
-        7.  Ověřte (mimo transakci), že se `counter` a `last_updated_by` správně změnily.
-        8.  Zkuste tento skript spustit *současně* ze dvou různých terminálů (`redis-cli`).  Sledujte, co se stane (kvůli `WATCH`).
+7.  **Transakce (Bezpečný převod bodů):**
+    * Představte si, že chcete převést 100 bodů z `user:alice:points` na `user:bob:points`. Oba klíče obsahují čísla (řetězce).
+    * Nastavte počáteční hodnoty: `SET user:alice:points 500`, `SET user:bob:points 200`.
+    * Napište transakci pomocí `WATCH`, `MULTI`, `DECRBY`, `INCRBY`, `EXEC`, která bezpečně převede 100 bodů.
+    * Otestujte: Zkuste spustit transakci. Poté zkuste v jiném terminálu změnit hodnotu `user:alice:points` *mezi* tím, než první terminál spustí `WATCH` a `EXEC`. Co se stane s transakcí? Proč je `WATCH` důležitý?
 
-8.  **Pub/Sub:**
-    *   Otevřete dva terminály s `redis-cli`.
-    *   V jednom terminálu se přihlaste k odběru kanálu `news`.
-    *   V druhém terminálu publikujte zprávu "Breaking news!" na kanál `news`.
-    *   Ověřte, že první terminál zprávu obdržel.
+8.  **Pub/Sub (Notifikace):**
+    * V terminálu 1 se přihlaste k odběru kanálu `user:notifications:7` (pro uživatele 7).
+    * V terminálu 2 publikujte zprávu `{"type": "new_message", "from_user_id": 8}` na kanál `user:notifications:7`.
+    * Ověřte příjem zprávy v terminálu 1.
+    * **(Bonus):** V terminálu 1 se přihlaste k odběru vzoru `system:alerts:*` pomocí `PSUBSCRIBE`. V terminálu 2 publikujte zprávu "CPU load high" na kanál `system:alerts:cpu` a zprávu "Disk space low" na `system:alerts:disk`. Ověřte příjem obou zpráv v terminálu 1.
 
-9. **Diskuze:** V jakých scénářích byste raději použili Redis (nebo jinou key-value databázi) *místo* relační databáze, a proč? A naopak, kdy byste se Redisu *vyhnuli*?
+9.  **Bitmaps (Sledování denní aktivity):**
+    * Představte si, že chcete sledovat, kteří uživatelé byli aktivní v daný den. Použijte Bitmap. Klíč bude `active_users:2025-03-26`. ID uživatele bude offset bitu.
+    * Označte uživatele s ID 10, 55 a 10 jako aktivní pro dnešek (`SETBIT active_users:2025-03-26 <user_id> 1`).
+    * Zkontrolujte, zda byl uživatel 55 aktivní (`GETBIT`). Zkontrolujte uživatele 100.
+    * Kolik unikátních uživatelů bylo dnes aktivních? (`BITCOUNT`).
 
+10. **Iterace pomocí SCAN:**
+    * Přidejte několik klíčů s prefixem `temp:`. Např. `SET temp:a 1`, `SET temp:b 2`, `SET temp:c 3`.
+    * Použijte příkaz `SCAN 0 MATCH temp:* COUNT 2`. Co příkaz vrátí? Jak byste pokračovali v iteraci, abyste získali všechny klíče `temp:*`? (Všimněte si vráceného kurzoru). Proč je to lepší než `KEYS temp:*`?
+
+11. **Diskuze:**
+    * V jakých konkrétních scénářích z vaší potenciální praxe (webové aplikace, hry, analýza dat...) by byl Redis ideální volbou a proč? Uveďte příklady využití různých datových typů.
+    * Kdy byste naopak sáhli po relační databázi (např. PostgreSQL, MySQL) nebo dokumentové databázi (např. MongoDB, CouchDB) místo Redisu? Jaké vlastnosti Redisu by byly limitující?
