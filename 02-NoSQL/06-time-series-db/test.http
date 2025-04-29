@@ -1,0 +1,40 @@
+### Nastavení proměnných (pro REST Client)
+# Tyto proměnné můžete přepsat vašimi skutečnými hodnotami
+@baseUrl = http://localhost:8086
+@token = my-super-secret-token
+@org = myorg
+@bucket = mybucket
+@precision = ns
+# @contentType = application/vnd.flux
+@contentType = text/plain; charset=utf-8
+@accept = application/csv
+
+### Zápis dat (v2 API - Line Protocol)
+# Zapíše jeden datový bod do 'mybucket'
+POST {{baseUrl}}/api/v2/write?org={{org}}&bucket={{bucket}}&precision={{precision}}
+Authorization: Token {{token}}
+Content-Type: {{contentType}}
+
+cpu,host=server_api,region=eu-central value=0.99
+
+### Čtení dat (v2 API - Flux, výstup CSV)
+# Načte data 'cpu' za posledních 5 minut z 'mybucket'
+POST {{baseUrl}}/api/v2/query?org={{org}}
+Authorization: Token {{token}}
+Accept: {{accept}}
+Content-Type: application/vnd.flux
+
+from(bucket: "{{bucket}}")
+  |> range(start: -5m)
+  |> filter(fn: (r) => r._measurement == "cpu")
+
+### Čtení dat (v2 API - Flux, výstup JSON)
+# Načte data 'cpu' za posledních 5 minut z 'mybucket' jako JSON
+POST {{baseUrl}}/api/v2/query?org={{org}}
+Authorization: Token {{token}}
+Accept: application/json
+Content-Type: application/vnd.flux
+
+from(bucket: "{{bucket}}")
+  |> range(start: -5m)
+  |> filter(fn: (r) => r._measurement == "cpu")

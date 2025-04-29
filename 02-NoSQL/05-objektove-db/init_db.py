@@ -6,7 +6,8 @@ from persistent.list import PersistentList
 from persistent.mapping import PersistentMapping
 from BTrees.OOBTree import OOBTree  # Můžete použít místo PersistentMapping
 
-# Define persistent classes (zůstává stejné)
+
+# Define persistent classes
 class Person(persistent.Persistent):
     def __init__(self, name, age):
         self.name = name
@@ -34,23 +35,23 @@ class Employee(Person):
         return f"Employee(name={self.name!r}, age={self.age!r}, position={self.position!r}, salary={self.salary!r})"
 
 
-if __name__ == '__main__':
-    storage = ZODB.FileStorage.FileStorage('mydata.fs')
+if __name__ == "__main__":
+    storage = ZODB.FileStorage.FileStorage("mydata.fs")
     db = ZODB.DB(storage)
     connection = db.open()
     root = connection.root()
-    
-    if 'people' not in root:
+
+    if "people" not in root:
         print("Initializing database...")
         root.people = PersistentMapping()
 
         john = Person("John Doe", 30)
-        john.address['street'] = "123 Main St"
-        john.address['city'] = "Anytown"
-        root.people['john'] = john  # Ukládáme do root.people
+        john.address["street"] = "123 Main St"
+        john.address["city"] = "Anytown"
+        root.people["john"] = john  # Ukládáme do root.people
 
         eva = Employee("Eva Dvořáková", 25, "Programmer", 50000)
-        root.people['eva'] = eva  # Ukládáme do root.people
+        root.people["eva"] = eva  # Ukládáme do root.people
 
         transaction.commit()
         print("Database initialized.")

@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  postgis:
+    container_name: postgis
+    image: postgis/postgis:15-3.4 # Použij aktuální verzi PostGIS
+    environment:
+      POSTGRES_USER: postgres # Uživatelské jméno (výchozí: postgres)
+      POSTGRES_PASSWORD: password # Heslo (změň si ho!)
+      POSTGRES_DB: gisdb # Výchozí databáze (volitelné)
+    ports:
+      - "5432:5432" # Mapování portu 5432 (standardní port PostgreSQL)
+    volumes:
+      - postgis_data:/var/lib/postgresql/data # Persistentní úložiště dat
+    restart: unless-stopped # Automatický restart, pokud se kontejner nezastaví úmyslně
+
+volumes:
+  postgis_data: # Definice persistentního volume

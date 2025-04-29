@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  influxdb:
+    container_name: influxdb
+    image: influxdb:2.7 # Použij aktuální verzi InfluxDB 2.x
+    ports:
+      - "8086:8086" # Mapování portu 8086 (InfluxDB API a UI)
+    volumes:
+      - influxdb_data:/var/lib/influxdb2 # Persistentní úložiště dat
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup # Nastavuje inicializační mód
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin # Uživatelské jméno
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password # Heslo (změň si ho!)
+      - DOCKER_INFLUXDB_INIT_ORG=myorg # Název organizace
+      - DOCKER_INFLUXDB_INIT_BUCKET=mybucket # Název výchozího bucketu
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-token # Admin token (změň si ho!)
+    restart: unless-stopped
+
+volumes:
+  influxdb_data: # Definice persistentního volume
