@@ -447,7 +447,7 @@ Použití HTTP API je nezbytné při integraci InfluxDB do vašich aplikací (na
 
 5.  **Diskuze:**
     * Porovnejte Flux s InfluxQL (pokud máte zkušenost) nebo s SQL. Jaké jsou hlavní rozdíly v syntaxi a přístupu?
-    * Kdy byste použili InfluxDB a kdy TimescaleDB? Uveďte konkrétní příklady.
+    * Kdy byste použili Time Series DB.
     * Jaké jsou výhody a nevýhody použití HTTP API oproti `influx` CLI?
     * Vysvětlete, jak byste navrhli systém pro sběr a analýzu metrik z tisíců serverů. Jaké komponenty byste použili (např. Telegraf, InfluxDB, Grafana)?
     * Jaký je rozdíl mezi tagy a poli (fields) v InfluxDB? Proč je toto rozlišení důležité?
