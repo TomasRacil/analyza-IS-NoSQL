@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-b-deployment
+  labels:
+    app: service-b
+spec:
+  replicas: 1 # Začneme s jednou replikou, budeme škálovat manuálně
+  selector:
+    matchLabels:
+      app: service-b # Tento selektor musí odpovídat labelům v šabloně podu
+  template:
+    metadata:
+      labels:
+        app: service-b # Label pro pody
+    spec:
+      containers:
+      - name: service-b-container
+        image: service-b-distrib:latest # Nahraďte názvem vašeho image, pokud je jiný
+        # Pokud používáte lokálně sestavený image s Minikube/Kind,
+        # možná budete chtít nastavit imagePullPolicy:
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000 # Port, na kterém aplikace v kontejneru naslouchá
+        # Zde by mohly být liveness a readiness probes pro robustnější nasazení
+        # livenessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 5000
+        #   initialDelaySeconds: 15
+        #   periodSeconds: 20
+        # readinessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 5000
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 10

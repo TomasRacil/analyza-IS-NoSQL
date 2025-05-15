@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  webapp:
+    build: ./webapp
+    container_name: webapp_caching
+    ports:
+      - "5000:5000" # Mapuje port 5000 Flask aplikace na port 5000 hostitele
+    environment:
+      # Adresa Redis serveru, jak je viditelná z webapp kontejneru.
+      # 'redis_cache' je název služby Redis definované níže.
+      - REDIS_HOST=redis_cache
+      - REDIS_PORT=6379
+      - FLASK_APP=app.py # Pro příkaz flask run
+      - FLASK_ENV=development # Pro zobrazení debug výstupu Flasku (volitelné)
+    depends_on:
+      - redis_cache # Webapp se spustí až po Redis serveru
+    networks:
+      - app_network
+
+  redis_cache:
+    image: redis:7.0-alpine
+    container_name: redis_cache_server
+    ports:
+      # Port Redisu není nutné mapovat na hostitele, pokud k němu přistupuje pouze webapp
+      # zevnitř Docker sítě. Pro ladění ho můžeme vystavit:
+      - "6379:6379"
+    volumes:
+      - redis_cache_data:/data # Perzistentní úložiště pro Redis data (pokud je potřeba)
+    networks:
+      - app_network
+
+volumes:
+  redis_cache_data:
+    # Pojmenovaný volume pro data Redisu
+
+networks:
+  app_network:
+    driver: bridge

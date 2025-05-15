@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  api_server:
+    # Sestaví image z Dockerfile v adresáři ./backend
+    build: ./backend
+    # Pojmenování kontejneru pro snazší identifikaci
+    container_name: node_express_api_example
+    # Mapování portů: port 3000 na hostiteli se mapuje na port 3000 v kontejneru
+    ports:
+      - "3000:3000"
+    # Nastavení proměnných prostředí, pokud by byly potřeba
+    # environment:
+    #   - NODE_ENV=development
+    # Restartovací politika
+    restart: unless-stopped

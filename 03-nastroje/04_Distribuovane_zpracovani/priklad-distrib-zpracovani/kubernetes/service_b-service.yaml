@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-b-svc # Název služby, přes který bude dostupná v clusteru
+  labels:
+    app: service-b
+spec:
+  type: ClusterIP # Výchozí typ, služba je dostupná pouze uvnitř clusteru.
+                 # Pro externí testování můžete použít NodePort nebo LoadBalancer (pokud váš cluster podporuje).
+  selector:
+    app: service-b # Tento selektor musí odpovídat labelům podů service-b-deployment
+  ports:
+  - protocol: TCP
+    port: 80 # Port, na kterém bude služba naslouchat uvnitř clusteru
+    targetPort: 5000 # Port, na který služba přesměruje provoz (port kontejneru service-b)

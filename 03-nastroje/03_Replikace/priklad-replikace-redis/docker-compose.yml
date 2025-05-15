@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  redis-master:
+    image: redis:7.0-alpine
+    container_name: redis-master-repl
+    ports:
+      - "6379:6379" # Standardní Redis port pro mastera
+    # Žádná speciální konfigurace pro mastera v tomto jednoduchém příkladu,
+    # ale v praxi by zde mohla být konfigurace perzistence atd.
+    # např. command: redis-server --appendonly yes
+
+  redis-slave:
+    image: redis:7.0-alpine
+    container_name: redis-slave-repl
+    ports:
+      - "6380:6379"
+        # Mapujeme interní port 6379 slavea na jiný port hostitele (6380)
+        # abychom se mohli připojit k oběma z hostitele pro testování.
+    # Příkaz pro spuštění Redis serveru s direktivou 'replicaof'
+    # 'redis-master' je název služby mastera definované v tomto docker-compose souboru.
+    # Docker Compose zajistí, že se tento název přeloží na správnou IP adresu kontejneru mastera.
+    # '6379' je port, na kterém master naslouchá uvnitř Docker sítě.
+    command: redis-server --replicaof redis-master 6379
+    depends_on:
+      - redis-master # Zajistí, že slave se spustí až po masteru
+
+# Tento příklad nepoužívá pojmenované volumes pro Redis data,
+# takže data budou ztracena po `docker-compose down`.
+# Pro perzistenci byste přidali sekci volumes a mapovali je do kontejnerů,
+# např. /data pro Redis.

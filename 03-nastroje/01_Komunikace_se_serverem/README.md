@@ -277,3 +277,20 @@ Kromě REST a GraphQL existují i další technologie pro komunikaci mezi systé
     * **Výhody:** Efektivní (šetří zdroje oproti pollingu), jednoduchá implementace pro notifikace.
     * **Nevýhody:** Vyžaduje, aby klient měl veřejně dostupný HTTP endpoint pro příjem notifikací, menší spolehlivost (zpráva se může ztratit, pokud klient není dostupný).
     * **Použití:** Notifikace o nových commitech (GitHub), zpracování plateb (Stripe), aktualizace stavu objednávky, integrace různých služeb.
+
+## 10. Praktická Ukázka: Jednoduché REST API
+
+Pro praktické vyzkoušení konceptů REST API najdete v materiálech jednoduchý příklad. Tento příklad demonstruje vytvoření a spuštění REST API serveru pomocí Node.js, frameworku Express a Dockeru. API poskytuje základní CRUD operace pro správu seznamu úkolů.
+
+**Kde příklad najdete:**
+
+* Adresář: `priklad-rest/` (v rámci této sekce `01_Komunikace_se_serverem`)
+* Podrobný popis, strukturu souborů, instrukce ke spuštění a testování naleznete v souboru `priklad_REST_API/README.md`.
+
+**Co příklad ukazuje:**
+
+* Jak definovat API endpointy pro operace GET, POST, PUT, DELETE.
+* Jak pracovat s JSON daty v požadavcích a odpovědích.
+* Jak kontejnerizovat Node.js aplikaci pomocí Dockeru.
+* Jak spravovat vícekontejnerovou aplikaci (i když zde máme jen jeden hlavní kontejner) pomocí Docker Compose.
+* Jak testovat API pomocí nástroje `curl` nebo rozšíření VS Code REST Client.

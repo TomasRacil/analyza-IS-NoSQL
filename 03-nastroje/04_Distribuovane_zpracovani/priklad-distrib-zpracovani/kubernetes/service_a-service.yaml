@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-a-svc
+  labels:
+    app: service-a
+spec:
+  type: NodePort # Umožní přístup zvenčí clusteru přes port na uzlech clusteru
+                 # Vhodné pro lokální testování (Minikube, Kind).
+                 # Pro cloudové prostředí by se typicky použil LoadBalancer.
+  selector:
+    app: service-a
+  ports:
+  - protocol: TCP
+    port: 5001 # Port, na kterém služba naslouchá uvnitř clusteru
+    targetPort: 5000 # Port kontejneru service-a
+    # nodePort: 30001 # Volitelně můžete specifikovat NodePort, jinak se vybere náhodný z rozsahu.
+                     # Pokud používáte Minikube, můžete zjistit URL pomocí `minikube service service-a-svc --url`

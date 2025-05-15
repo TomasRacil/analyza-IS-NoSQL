@@ -1,0 +1,4 @@
+Toto je první řádek.
+Toto je druhý řádek, řádek textu.
+A toto je třetí a poslední řádek.
+MapReduce je zajímavý koncept, MapReduce.

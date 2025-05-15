@@ -1,0 +1,108 @@
+# Definice proměnné pro základní URL API serveru
+@baseUrl = http://localhost:3000
+
+###
+# Získání všech úkolů
+# Metoda: GET
+# Endpoint: /tasks
+GET {{baseUrl}}/tasks
+Accept: application/json
+
+###
+# Vytvoření nového úkolu
+# Metoda: POST
+# Endpoint: /tasks
+# Tělo požadavku obsahuje titul úkolu. ID a stav 'completed' se nastaví automaticky serverem.
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Nakoupit mléko a rohlíky"
+}
+
+###
+# Vytvoření dalšího úkolu
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Zavolat zubaři",
+  "completed": false
+}
+
+###
+# Vytvoření úkolu, který je již splněný
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Vyvenčit psa",
+  "completed": true
+}
+
+###
+# Získání konkrétního úkolu podle ID
+# Nahraďte '1' za existující ID úkolu.
+# Metoda: GET
+# Endpoint: /tasks/:id
+GET {{baseUrl}}/tasks/1
+Accept: application/json
+
+###
+# Získání neexistujícího úkolu
+GET {{baseUrl}}/tasks/999
+Accept: application/json
+
+###
+# Aktualizace existujícího úkolu
+# Nahraďte '2' za existující ID úkolu.
+# Můžete aktualizovat 'title' a/nebo 'completed'.
+# Metoda: PUT
+# Endpoint: /tasks/:id
+PUT {{baseUrl}}/tasks/2
+Content-Type: application/json
+
+{
+  "title": "Zavolat zubaři - objednáno na středu",
+  "completed": true
+}
+
+###
+# Aktualizace pouze stavu 'completed' u úkolu
+# Nahraďte '3' za existující ID úkolu.
+PUT {{baseUrl}}/tasks/3
+Content-Type: application/json
+
+{
+  "completed": false
+}
+
+###
+# Pokus o aktualizaci neexistujícího úkolu
+PUT {{baseUrl}}/tasks/999
+Content-Type: application/json
+
+{
+  "title": "Neexistující úkol",
+  "completed": false
+}
+
+###
+# Smazání úkolu
+# Nahraďte '1' za existující ID úkolu.
+# Metoda: DELETE
+# Endpoint: /tasks/:id
+DELETE {{baseUrl}}/tasks/1
+
+###
+# Pokus o smazání již smazaného nebo neexistujícího úkolu
+DELETE {{baseUrl}}/tasks/999
+
+###
+# Vytvoření úkolu s chybějícím titulem (očekáváme chybu 400)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "completed": false
+}

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-a-deployment
+  labels:
+    app: service-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-a
+  template:
+    metadata:
+      labels:
+        app: service-a
+    spec:
+      containers:
+      - name: service-a-container
+        image: service-a-distrib:latest # Nahraďte názvem vašeho image
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+        - name: SERVICE_B_URL
+          # service-b-svc je název Kubernetes Service pro service_b
+          # Port 80 je port, na kterém service-b-svc naslouchá
+          value: "http://service-b-svc:80" 
+        # Zde by také mohly být liveness a readiness probes

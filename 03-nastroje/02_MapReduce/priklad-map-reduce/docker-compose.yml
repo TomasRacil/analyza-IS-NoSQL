@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mapreduce_worker:
+    # Použijeme oficiální Python image. Můžete specifikovat konkrétní verzi.
+    image: python:3.9-slim
+    # Pojmenování kontejneru pro snazší identifikaci
+    container_name: python_mapreduce_wordcount
+    # Pracovní adresář uvnitř kontejneru
+    working_dir: /app
+    # Mapujeme aktuální adresář (kde je tento docker-compose.yml, word_count.py a input.txt)
+    # do adresáře /app uvnitř kontejneru.
+    # To umožní Python skriptu přistupovat k input.txt a word_count.py.
+    volumes:
+      - .:/app
+    # Příkaz, který se spustí při startu kontejneru.
+    # Spustí Python skript word_count.py.
+    command: python word_count.py
+    # Nechceme, aby se kontejner restartoval automaticky,
+    # protože je to jednorázová úloha.
+    # restart: no # Výchozí chování je 'no', takže toto není striktně nutné.

@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine # Používáme image s management pluginem
+    container_name: rabbitmq_server
+    ports:
+      - "5672:5672" # Port pro AMQP protokol (pro producenty a konzumenty)
+      - "15672:15672" # Port pro webové management rozhraní
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq # Perzistentní úložiště pro data RabbitMQ
+    environment:
+      # Výchozí přihlašovací údaje jsou guest/guest, ale lze je zde změnit
+      # RABBITMQ_DEFAULT_USER: user
+      # RABBITMQ_DEFAULT_PASS: password
+      RABBITMQ_NODENAME: rabbit@localhost # Název uzlu, důležité pro clustering (zde jednoduché)
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network
+
+  producer:
+    build: ./producer
+    container_name: python_producer
+    depends_on:
+      rabbitmq:
+        condition: service_healthy # Spustí se, až bude RabbitMQ zdravý
+    environment:
+      - RABBITMQ_HOST=rabbitmq # Název služby RabbitMQ v této Docker síti
+    networks:
+      - app_network
+    # Restart se nenastavuje, producent se má spustit, odeslat zprávy a ukončit.
+    # Pokud chcete, aby běžel opakovaně nebo čekal, musel by se upravit skript producenta.
+
+  consumer:
+    build: ./consumer
+    depends_on:
+      rabbitmq:
+        condition: service_healthy # Spustí se, až bude RabbitMQ zdravý
+    environment:
+      - RABBITMQ_HOST=rabbitmq # Název služby RabbitMQ v této Docker síti
+    networks:
+      - app_network
+    # restart: always # Konzument by měl běžet neustále a čekat na zprávy
+
+volumes:
+  rabbitmq_data:
+
+
+networks:
+  app_network:
+    driver: bridge
