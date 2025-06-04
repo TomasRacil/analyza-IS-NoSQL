@@ -6,10 +6,11 @@ Toto úložiště obsahuje materiály k předmětu zaměřenému na NoSQL datab�
 
 Výukové materiály jsou rozděleny do jednotlivých adresářů, které reprezentují jednotlivé lekce/témata:
 
-*   **`00-predpoklady/`**:  Obsahuje informace a instrukce k instalaci potřebného softwaru (Git, Docker, Docker Compose) a základní seznámení s těmito nástroji.  *Toto je nutné projít před začátkem předmětu.*
-*   **`01-uvodni-hodina/`**:  Úvodní materíál k předmětu - jak bude předmět hodnoce, obsah předmětu.
-*   **`02-NoSQL/`**:  Obecný úvod do problematiky, typy NoSQL databází. Praktické příklady tohoto tématu.
-...
+*   [**`00-predpoklady/`**](00-predpoklady/README.md):  Obsahuje informace a instrukce k instalaci potřebného softwaru (Git, Docker, Docker Compose) a základní seznámení s těmito nástroji.  *Toto je nutné projít před začátkem předmětu.*
+*   [**`01-uvodni-hodina/`**](01-uvodni-hodina/README.md):  Úvodní materíál k předmětu - jak bude předmět hodnoce, obsah předmětu.
+*   [**`02-NoSQL/`**](02-NoSQL/README.md):  Obecný úvod do problematiky, typy NoSQL databází. Praktické příklady tohoto tématu.
+*   [**`03-nastroje`**](03-nastroje/README.md):
+*   [**`04-Bigdata`**](04-Bigdata/README.md):
 
 ## Jak začít?
 
