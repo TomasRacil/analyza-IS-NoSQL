@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    hostname: namenode
+    ports:
+      - "9870:9870" # NameNode Web UI (novější Hadoop verze typicky používají 9870)
+      - "9000:9000" # HDFS RPC port
+    volumes:
+      - ./sample_files:/sample_files # Mapujeme lokální soubory do kontejneru NameNode
+    environment:
+      - CLUSTER_NAME=myhdfscluster
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    networks:
+      - hadoop_network
+
+  datanode1:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode1
+    hostname: datanode1
+    depends_on:
+      - namenode
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    networks:
+      - hadoop_network
+
+networks:
+  hadoop_network:
+    driver: bridge
