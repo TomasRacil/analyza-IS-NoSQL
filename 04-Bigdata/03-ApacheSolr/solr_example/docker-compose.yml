@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  solr:
+    image: solr:latest
+    container_name: my_solr_instance
+    ports:
+      - "8983:8983" # Standardní port Solru
+    volumes:
+      # Mapujeme lokální adresář solr_home do kontejneru, kde Solr očekává konfiguraci jader
+      # Solr při startu automaticky detekuje jádra v /var/solr/data (kam se obvykle ukládají data a konfigurace)
+      # nebo můžeme jádro vytvořit později přes Admin UI nebo API.
+      # Pro tento příklad připravíme konfiguraci jádra předem.
+      - ./solr_home:/var/solr/data
+      # Pojmenované volume pro perzistentní uložení indexovaných dat samotných jader
+      # Toto je oddělené od konfigurace, Solr si sem bude ukládat segmenty indexu.
+      # Solr defaultně ukládá data jader do /var/solr/data/<jmeno_jadra>/data
+      # Pokud mapujeme celý /var/solr/data z hosta, data indexu budou také na hostu.
+      # Příkaz pro spuštění Solru a automatické vytvoření jádra "mycore", pokud neexistuje
+      # a pokud je v /var/solr/data/mycore/conf správná konfigurace.
+      # Alternativně lze jádro vytvořit přes Admin UI nebo API po startu kontejneru.
+      # Pro tento příklad budeme spoléhat na to, že Solr si jádro najde díky namapovanému solr_home.
+      # command: solr-precreate mycore /var/solr/data/mycore 
+      # Poznámka: Pro solr:9.x je `solr-precreate` součástí image.
+      # Pokud by nefungovalo, jádro vytvoříme manuálně po startu.
+      # Jednodušší je nechat Solr detekovat jádro z namapovaného adresáře.
+
+      # Pojmenované volume (pokud bychom chtěli data indexu explicitně spravovat Dockerem)
+      # volumes:
+      #   solr_data_volume:

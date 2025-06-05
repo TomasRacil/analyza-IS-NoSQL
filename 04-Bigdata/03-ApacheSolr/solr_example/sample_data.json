@@ -1,0 +1,42 @@
+[
+    {
+        "id": "doc1",
+        "title": "Úvod do Apache Solr",
+        "description": "Tento dokument popisuje základy Apache Solr a jeho použití pro fulltextové vyhledávání.",
+        "category": "Technologie",
+        "author": "Jan Novák",
+        "year": 2023
+    },
+    {
+        "id": "doc2",
+        "title": "Vaření s Apache Spark",
+        "description": "Kuchařka pro rychlé a efektivní zpracování receptů pomocí Apache Spark. Zahrnuje tipy pro distribuované vaření.",
+        "category": "Kuchařky",
+        "author": "Eva Svobodová",
+        "year": 2022
+    },
+    {
+        "id": "doc3",
+        "title": "Pokročilé techniky Solr",
+        "description": "Detailní průvodce pokročilými funkcemi Apache Solr, včetně SolrCloud a optimalizace výkonu.",
+        "category": "Technologie",
+        "author": "Petr Dvořák",
+        "year": 2023
+    },
+    {
+        "id": "doc4",
+        "title": "Historie vaření v Čechách",
+        "description": "Přehled tradičních českých receptů a historie gastronomie. Apache Solr zde není zmíněn.",
+        "category": "Kuchařky",
+        "author": "Marie Veselá",
+        "year": 2021
+    },
+    {
+        "id": "doc5",
+        "title": "Solr a Big Data řešení",
+        "description": "Jak integrovat Apache Solr do ekosystému Big Data a využít jeho sílu pro analýzu nestrukturovaných dat.",
+        "category": "Technologie",
+        "author": "Tomáš Procházka",
+        "year": 2024
+    }
+]
